@@ -1,0 +1,21 @@
+swagger: "2.0"
+ OntologyTerm:
+    type: "object"
+    required:
+    - "accession"
+    - "name"
+    properties:
+      accession:
+        type: "string"
+        example: "MS:1001975"
+      name:
+        type: "string"
+        example: "delta m/z"
+      value:
+        type: "string"
+        example: "0.5"
+      cvLabel: "string"
+        type: "string"
+        example: "MS"
+    xml:
+      name: "OntologyTerm"
