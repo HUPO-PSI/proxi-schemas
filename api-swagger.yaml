@@ -19,7 +19,7 @@ tags:
     url: "https://github.com/bigbio/proxi-schemas/dataset/"
 - name: "protein"
   description: "A protein identification across multiple datasets"
-  extenralDocs:
+  externalDocs:
     description: "Protein definition"
     url: "https://github.com/bigbio/proxi-schemas/protein/"
 - name: "peptide"

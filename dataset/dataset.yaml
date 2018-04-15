@@ -1,0 +1,30 @@
+swagger: "2.0"
+ Dataset:
+    type: "object"
+    requires:
+     - "accession"
+     - "title"
+     - "summary"
+     - "organisms"
+     - "instruments"
+     - "modifications"
+     - "contacts"
+     - "dataFiles"
+     - "fullDatasetLinks"
+    properties:
+     accession:
+      type: "string"
+      example: "PXD008399"
+     title:
+      type: "string"
+      example: "Direct identification of protein S-palmitoylation sites"
+     summary:
+      type: "string"
+      example: "Direct identification of protein S-palmitoylation sites description"
+     organisms:
+      type: "array"
+      xml:
+        name: "organism"
+        wrapped: true
+      items:
+        $ref: "../common/OntologyTerm.yaml#/Ontology"
