@@ -1,0 +1,193 @@
+swagger: "2.0"
+info:
+  description: "This is the first version of the protein expression interface. It allows to exchange information about protein expression data. The API defintion has been designed using Swagger DL [http://swagger.io](http://swagger.io)."
+  version: "0.0.1"
+  title: "Proteomics Expression Interface"
+  termsOfService: "https://github.com/bigbio/proxi-schemas/LICENSE.md"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "https://github.com/bigbio/proxi-schemas/LICENSE.md"
+host: "proteomexchange.org"
+basePath: "/ws/v1"
+tags:
+- name: "dataset"
+  description: "A proteomics dataset"
+  externalDocs:
+    description: "Dataset definition"
+    url: "https://github.com/bigbio/proxi-schemas/dataset/"
+- name: "protein"
+  description: "A protein identification across multiple datasets"
+  externalDocs:
+    description: "Protein definition"
+    url: "https://github.com/bigbio/proxi-schemas/protein/"
+- name: "peptide"
+  description: "Peptide identification across multiple datasets"
+  externalDocs:
+    description: "Peptide definition"
+    url: "https://github.com/bigbio/proxi-schemas/peptide/"
+schemes:
+- "http"
+- "https"
+paths:
+  /dataset/findByAccession:
+    get:
+      tags:
+      - "dataset"
+      summary: "Find dataset by Accessions"
+      description: "Find the datasets by Datasets by Accessions"
+      operationId: "findByAccession"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "accession"
+        in: "query"
+        description: "Accession values that need to be considered for filter"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Dataset"
+        400:
+          description: "Bad Request. Invalid Accession Requested"
+        404:
+          description: "No dataset has been found with the requested accessions"
+  /dataset/findByAttributes:
+    get:
+      tags:
+      - "dataset"
+      summary: "Finds Datasets by Attributes"
+      description: "Find datasets by keywords on any of the attributes of a dataset"
+      operationId: "findByAttributes"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "keyword"
+        in: "query"
+        description: "keyword to query all the attributes of a dataset"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Dataset"
+        400:
+          description: "Bad Request. Invalid keyword Requested"
+        404:
+          description: "No dataset has been found with the requested keyword"
+  /dataset/{datasetAccession}:
+    get:
+      tags:
+      - "dataset"
+      summary: "Find the dataset by the accession"
+      description: "Returns a single dataset by dataset Accession"
+      operationId: "getDatasetByAccession"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "datasetAccession"
+        in: "path"
+        description: "Accession of the Dataset return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: "#/definitions/Dataset"
+        400:
+          description: "Bad Request. Invalid Accession Requested"
+        404:
+          description: "Dataset not found"
+  /dataset/{datasetAccession}/proteins:
+    get:
+      tags:
+      - "dataset"
+      summary: "Get all the proteins at the level of Dataset"
+      description: "Returns all the proteins reported at the level of Dataset"
+      externalDocs:
+        description: "Description about how to reports the proteins at the level of Dataset"
+        url: "https://github.com/bigbio/proxi-schemas/dataset/"
+      operationId: "getProteinsByDatasetAccession"
+      produces:
+          - "application/xml"
+          - "application/json"
+      parameters:
+          - name: "datasetAccession"
+            in: "path"
+            description: "Accession of the Dataset to return proteins"
+            required: true
+            type: "string"
+      responses:
+            200:
+              description: "Successful Operation"
+              schema:
+                $ref: "#/definitions/Protein"
+            400:
+              description: "Bad Request. Invalid Accession Requested"
+            404:
+              description: "Dataset not found"
+  /protein/{proteinAccession}:
+    get:
+      tags:
+      - "protein"
+      summary: "Returns the protein by protein Accession"
+      description: "Returns a protein by a protein accession"
+      externalDocs:
+        description: "External Documentation about How to report a Protein at Resource Level"
+        url: "https://github.com/bigbio/proxi-schemas/protein/"
+      operationId: "getProteinByAccession"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "proteinAccession"
+        in: "path"
+        description: "Accession of the Dataset return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            additionalProperties:
+              type: "integer"
+              format: "int32"
+definitions:
+  Dataset:
+    type: "object"
+    $ref: 'dataset/dataset.yaml#/Dataset'
+  Protein:
+    type: "object"
+    $ref: "biology/protein/protein.yaml#/Protein"
+  Peptide:
+    type: "object"
+    $ref: 'biology/peptide/peptide.yaml#/Peptide'
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about PROXI"
+  url: "http://github.com/bigbio/proxi-schemas/"
