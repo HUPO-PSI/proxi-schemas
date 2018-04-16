@@ -29,134 +29,65 @@ tags:
     url: "https://github.com/bigbio/proxi-schemas/peptide/"
 schemes:
 - "http"
+- "https"
 paths:
-  /dataset:
-    post:
+  /dataset/findByAccession:
+    get:
       tags:
-      - "pet"
-      summary: "Add a new pet to the store"
-      description: ""
-      operationId: "addPet"
-      consumes:
-      - "application/json"
-      - "application/xml"
+      - "dataset"
+      summary: "Find dataset by Accessions"
+      description: "Find the datasets by Datasets by Accessions"
+      operationId: "findByAccession"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet object that needs to be added to the store"
+      - name: "accession"
+        in: "query"
+        description: "Accession values that need to be considered for filter"
         required: true
-        schema:
-          $ref: "#/definitions/Pet"
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
       responses:
-        405:
-          description: "Invalid input"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-    put:
-      tags:
-      - "pet"
-      summary: "Update an existing pet"
-      description: ""
-      operationId: "updatePet"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet object that needs to be added to the store"
-        required: true
-        schema:
-          $ref: "#/definitions/Pet"
-      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "/dataset/dataset.yaml"
         400:
-          description: "Invalid ID supplied"
+          description: "Bad Request. Invalid Accession Requested"
         404:
-          description: "Pet not found"
-        405:
-          description: "Validation exception"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /dataset/findByStatus:
+          description: "No dataset has been found with the requested accessions"
+  /dataset/findByAttributes:
     get:
       tags:
-      - "pet"
-      summary: "Finds Pets by status"
-      description: "Multiple status values can be provided with comma separated strings"
-      operationId: "findPetsByStatus"
+      - "dataset"
+      summary: "Finds Datasets by Attributes"
+      description: "Find datasets by keywords on any of the attributes of a dataset"
+      operationId: "findByAttributes"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "status"
+      - name: "keyword"
         in: "query"
-        description: "Status values that need to be considered for filter"
+        description: "keyword to query all the attributes of a dataset"
         required: true
-        type: "array"
-        items:
-          type: "string"
-          enum:
-          - "available"
-          - "pending"
-          - "sold"
-          default: "available"
-        collectionFormat: "multi"
+        type: "string"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful Operation"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Pet"
+              $ref: "/dataset/dataset.yaml"
         400:
-          description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /dataset/findByTags:
-    get:
-      tags:
-      - "pet"
-      summary: "Finds Pets by tags"
-      description: "Muliple tags can be provided with comma separated strings. Use         tag1, tag2, tag3 for testing."
-      operationId: "findPetsByTags"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "tags"
-        in: "query"
-        description: "Tags to filter by"
-        required: true
-        type: "array"
-        items:
-          type: "string"
-        collectionFormat: "multi"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Pet"
-        400:
-          description: "Invalid tag value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-      deprecated: true
+          description: "Bad Request. Invalid Accession Requested"
+        404:
+          description: "No dataset has been found with the requested keyword"
   /dataset/{datasetId}:
     get:
       tags:
