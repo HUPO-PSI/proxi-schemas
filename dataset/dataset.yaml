@@ -10,7 +10,7 @@ swagger: "2.0"
    - "modifications"
    - "contacts"
    - "dataFiles"
-   - "fullDatasetLinks"
+   - "fullDatasetLink"
   properties:
     accession:
       type: "string"
@@ -42,4 +42,37 @@ swagger: "2.0"
         wrapped: true
       items:
         $ref: "../common/OntologyTerm.yaml"
+    contacts:
+      type: "array"
+      xml:
+        name: "contact"
+        wrapped: true
+      items:
+        $ref: "contact.yaml"
+    publications:
+      type: "array"
+      xml:
+        name: "publication"
+        wrapped: true
+      items:
+        $ref: "../common/OntologyTerm.yaml"
+    keywords:
+      type: "array"
+      xml:
+        name: "keyword"
+        wrapped: true
+      items:
+        $ref: "../common/OntologyTerm.yaml"
+    fullDatasetLink:
+      type: "object"
+      $ref: "../common/OntologyTerm.yaml"
+    dataFiles:
+      type: "array"
+      xml:
+        name: "dataFile"
+        wrapped: true
+      items:
+        $ref: "../common/OntologyTerm.yaml"
+
+
 

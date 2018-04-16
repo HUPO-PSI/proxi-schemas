@@ -1,0 +1,19 @@
+swagger: "2.0"
+ Contact:
+   type: "object"
+   requires:
+     - "type"
+   properties:
+     contactType:
+       enum: [Submitter, LabHead]
+       type: "string"
+       example: "Submitter"
+     attributes:
+       type: "array"
+       xml:
+         name: "attribute"
+         wrapped: true
+       items:
+        $ref: "../common/OntologyTerm.yaml"
+
+
