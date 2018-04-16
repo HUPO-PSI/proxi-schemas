@@ -93,7 +93,7 @@ paths:
       tags:
       - "dataset"
       summary: "Find the dataset by the accession"
-      description: "Returns a single pet"
+      description: "Returns a single dataset by dataset Accession"
       operationId: "getDatasetByAccession"
       produces:
       - "application/xml"
@@ -141,15 +141,16 @@ paths:
               description: "Bad Request. Invalid Accession Requested"
             404:
               description: "Dataset not found"
-
-
-  /store/inventory:
+  /protein/{proteinAccession}:
     get:
       tags:
-      - "store"
-      summary: "Returns pet inventories by status"
-      description: "Returns a map of status codes to quantities"
-      operationId: "getInventory"
+      - "protein"
+      summary: "Returns the protein by protein Accession"
+      description: "Returns a protein by a protein accession"
+      externalDocs:
+        description: "External Documentation about How to report a Protein at Resource Level"
+        url: "https://github.com/bigbio/proxi-schemas/protein/"
+      operationId: "getProteinByAccession"
       produces:
       - "application/json"
       parameters: []
