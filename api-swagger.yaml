@@ -34,10 +34,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OntologyTerm'
+                $ref: '#/components/schemas/Datasets'
             application/xml:
               schema:
-                $ref: '#/components/schemas/OntologyTerm'
+                $ref: '#/components/schemas/Datasets'
         '400':
           description: Bad Request. Invalid Accession Requested
         '404':
@@ -45,6 +45,8 @@ paths:
 components:
   schemas:
      OntologyTerm:
+       xml:
+         name: OntologyTerm
        required:
          - accession
          - name
@@ -57,3 +59,70 @@ components:
            type: string
          cvLabel:
            type: string
+     Contact:
+       xml:
+         name: Contact
+       required:
+          - contactType
+       properties:
+          contactType:
+             enum: [Submitter, LabHead]
+             type: string
+          contactProperties:
+             type: array
+             items:
+               $ref: "#/components/schemas/OntologyTerm"
+     Dataset:
+       xml:
+         name: Dataset
+       required:
+         - accession
+         - title
+         - summary
+         - organisms
+         - instruments
+         - modifications
+         - contacts
+         - dataFiles
+         - datasetLink
+       properties:
+         accession:
+           type: string
+         title:
+           type: string
+         summary:
+           type: string
+         organisms:
+           type: array
+           items:
+            $ref: "#/components/schemas/OntologyTerm"
+         instruments:
+           type: array
+           items:
+            $ref: "#/components/schemas/OntologyTerm"
+         modifications:
+           type: array
+           items:
+            $ref: "#/components/schemas/OntologyTerm"
+         contacts:
+           type: array
+           items:
+            $ref: "#/components/schemas/Contact"
+         publications:
+           type: "array"
+           items:
+            $ref: "#/components/schemas/OntologyTerm"
+         keywords:
+           type: "array"
+           items:
+            $ref: "#/components/schemas/OntologyTerm"
+         datasetLink:
+            $ref: "#/components/schemas/OntologyTerm"
+         dataFiles:
+            type: "array"
+            items:
+             $ref: "#/components/schemas/OntologyTerm"
+     Datasets:
+       type: array
+       items:
+         $ref: "#/components/schemas/Dataset"
