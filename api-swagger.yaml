@@ -85,138 +85,64 @@ paths:
             items:
               $ref: "/dataset/dataset.yaml"
         400:
-          description: "Bad Request. Invalid Accession Requested"
+          description: "Bad Request. Invalid keyword Requested"
         404:
           description: "No dataset has been found with the requested keyword"
-  /dataset/{datasetId}:
+  /dataset/{datasetAccession}:
     get:
       tags:
-      - "pet"
-      summary: "Find pet by ID"
+      - "dataset"
+      summary: "Find the dataset by the accession"
       description: "Returns a single pet"
-      operationId: "getPetById"
+      operationId: "getDatasetByAccession"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "datasetId"
+      - name: "datasetAccession"
         in: "path"
-        description: "ID of pet to return"
+        description: "Accession of the Dataset return"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
-          description: "successful operation"
+          description: "Successful Operation"
           schema:
-            $ref: "#/definitions/Pet"
+            $ref: "/dataset/dataset.yaml"
         400:
-          description: "Invalid ID supplied"
+          description: "Bad Request. Invalid Accession Requested"
         404:
-          description: "Pet not found"
-      security:
-      - api_key: []
-    post:
-      tags:
-      - "pet"
-      summary: "Updates a pet in the store with form data"
-      description: ""
-      operationId: "updatePetWithForm"
-      consumes:
-      - "application/x-www-form-urlencoded"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "datasetId"
-        in: "path"
-        description: "ID of pet that needs to be updated"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "name"
-        in: "formData"
-        description: "Updated name of the pet"
-        required: false
-        type: "string"
-      - name: "status"
-        in: "formData"
-        description: "Updated status of the pet"
-        required: false
-        type: "string"
-      responses:
-        405:
-          description: "Invalid input"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-    delete:
-      tags:
-      - "pet"
-      summary: "Deletes a pet"
-      description: ""
-      operationId: "deletePet"
-      produces:
-      - "application/xml"
-      - "application/json"
-      parameters:
-      - name: "api_key"
-        in: "header"
-        required: false
-        type: "string"
-      - name: "datasetId"
-        in: "path"
-        description: "Pet id to delete"
-        required: true
-        type: "integer"
-        format: "int64"
-      responses:
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Pet not found"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
-  /dataset/{datasetId}/uploadImage:
-    post:
+          description: "Dataset not found"
+  /dataset/{datasetAccession}/proteins:
+    get:
       tags:
       - "dataset"
-      summary: "uploads an image"
-      description: ""
-      operationId: "uploadFile"
-      consumes:
-      - "multipart/form-data"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "datasetId"
-        in: "path"
-        description: "ID of pet to update"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "additionalMetadata"
-        in: "formData"
-        description: "Additional data to pass to server"
-        required: false
-        type: "string"
-      - name: "file"
-        in: "formData"
-        description: "file to upload"
-        required: false
-        type: "file"
-      responses:
-        200:
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/ApiResponse"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
+      summary: "Get all the proteins at the level of Dataset"
+      description: "Returns all the proteins reported at the level of Dataset"
+      externalDocs:
+        description: "Description about how to reports the proteins at the level of Dataset"
+        url: "https://github.com/bigbio/proxi-schemas/dataset/"
+      operationId: "getProteinsByDatasetAccession"
+          produces:
+          - "application/xml"
+          - "application/json"
+          parameters:
+          - name: "datasetAccession"
+            in: "path"
+            description: "Accession of the Dataset to return proteins"
+            required: true
+            type: "string"
+          responses:
+            200:
+              description: "Successful Operation"
+              schema:
+                $ref: "/dataset/dataset.yaml"
+            400:
+              description: "Bad Request. Invalid Accession Requested"
+            404:
+              description: "Dataset not found"
+
+
   /store/inventory:
     get:
       tags:
