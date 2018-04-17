@@ -1,20 +1,22 @@
 {
-  "name": "proteomics-expression-interface",
+  "name": "build",
   "version": "0.0.1",
-  "description": "This is the first version of the protein expression interface. It allows to exchange information about protein expression data. The API defintion has been designed using Swagger DL [http://swagger.io](http://swagger.io).",
-  "main": "index.js",
-  "scripts": {
-	"prestart": "npm install",
-	"start": "node index.js"
-  },
-  "keywords": [
-    "swagger"
-  ],
-  "license": "Unlicense",
   "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
   "dependencies": {
-    "connect": "^3.2.0",
-    "js-yaml": "^3.3.0",
-    "swagger-tools": "0.10.1"
+    "connect": "^3.3.5",
+    "swagger-connect": "^0.1.0"
+  },
+  "devDependencies": {
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test"
   }
 }

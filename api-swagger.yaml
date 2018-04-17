@@ -42,6 +42,32 @@ paths:
           description: Bad Request. Invalid Accession Requested
         '404':
           description: No dataset has been found with the requested accessions
+
+  /dataset/findByAttributes:
+     get:
+       tags:
+         - dataset
+       description: Find datasets by keywords on any of the attributes of a dataset
+       operationId: findByAttributes
+       parameters:
+         - name: keyword
+           in: query
+           description: keyword to query all the attributes of a dataset
+           required: true
+           schema:
+             type: string
+       responses:
+        '200':
+           description: Successful Operation
+           content:
+             application/json:
+               schema:
+                 type: object
+                 $ref: "#/components/schemas/Dataset"
+        '400':
+           description: "Bad Request. Invalid keyword Requested"
+        '404':
+           description: "No dataset has been found with the requested keyword"
 components:
   schemas:
      OntologyTerm:
