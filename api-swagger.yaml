@@ -97,11 +97,9 @@ paths:
            content:
              application/json:
                schema:
-                 type: object
                  $ref: "#/components/schemas/Dataset"
              application/xml:
                schema:
-                 type: object
                  $ref: "#/components/schemas/Dataset"
         '400':
            description: Bad Request. Invalid keyword Requested
@@ -127,12 +125,37 @@ paths:
            content:
               application/json:
                 schema:
-                  type: object
                   $ref: "#/components/schemas/Proteins"
               application/xml:
                 schema:
-                  type: object
                   $ref: "#/components/schemas/Proteins"
+        '400':
+           description: Bad Request. Invalid keyword Requested
+        '404':
+           description: No dataset has been found with the requested keyword
+  /datasets/{accession}/peptidoforms:
+     get:
+       tags:
+         - datasets
+       description: Find the list of Peptidoforms in one dataset
+       operationId: getPeptidoFormsByDatasetAccession
+       parameters:
+          - name: accession
+            in: path
+            description: Dataset Accession
+            required: true
+            schema:
+              type: string
+       responses:
+        '200':
+           description: Successful Operation
+           content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Peptidoforms'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/Peptidoforms'
         '400':
            description: Bad Request. Invalid keyword Requested
         '404':
@@ -231,9 +254,21 @@ components:
          proteinAccession:
            type: string
          confidenceScore:
-           type: object
            $ref: "#/components/schemas/OntologyTerm"
      Proteins:
             type: array
             items:
               $ref: "#/components/schemas/Protein"
+     Peptidoform:
+       required:
+         - peptideAccession
+         - confidenceScore
+       properties:
+         peptideAccession:
+           type: string
+         confidenceScore:
+           $ref: "#/components/schemas/OntologyTerm"
+     Peptidoforms:
+         type: array
+         items:
+           $ref: "#/components/schemas/Peptidoform"
