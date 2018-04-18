@@ -38,10 +38,10 @@ as shown here.
 
 ### Naming conventions
 
-- A **resource** SHOULD be represented as a collection. For example, “datasets” is a collection of datasets
+1. A **resource** SHOULD be represented as a collection. For example, “datasets” is a collection of datasets
 where we can identify a single “dataset” using the resource URI “/datasets/{customerId}”.
 
-- SHOULD NOT use trailing forward slash (/) in URIs:
+2. MUST NOT use trailing forward slash (/) in URIs:
 
 ```
   http://api.example.com/device-management/managed-devices/
@@ -49,20 +49,59 @@ where we can identify a single “dataset” using the resource URI “/datasets
 
 ```
 
-- SHOULD NOT use underscores ( _ ), instead use ( - ):
+3. MUST NOT use underscores ( _ ), instead use ( - ):
 
 It’s posible to use an underscore in place of hyphen to be used as seperator – But depending on the application’s font,
 it’s possible that the underscore (_) character can either get partially obscured or completely hidden in some browsers
 or screens.
-
-To avoid this confusion, use hyphens (-) instead of underscores ( _ ).
 
 ```
 http://api.example.com/inventory-management/managed-entities/{id}/install-script-location  //More readable
 http://api.example.com/inventory_management/managed_entities/{id}/install_script_location  //More error prone
 ```
 
+4. SHOULD NOT Use uppercase letters in URIs:
 
+When convenient, lowercase letters should be consistently preferred in URI paths. **RFC 3986** defines
+URIs as case-sensitive except for the scheme and host components. e.g.
+
+```
+http://api.example.org/resource/1        //Better representation
+http://api.example.org/Resource/1
+```
+
+5. MUST NOT use file extensions
+
+File extensions look bad and do not add any advantage. Removing them decerase the length of URIs
+as well. No reason to keep them.
+
+```
+http://api.example.com/device-management/managed-devices.xml  /*Do not use it*/
+http://api.example.com/device-management/managed-devices 	/*This is correct URI*/
+```
+
+6. MUST NOT use CRUD function names in URIs
+
+URIs MUST NOT be used to indicate that a CRUD function is performed.
+URIs should be used to uniquely identify resources and not any action upon them.
+HTTP request methods (headers) should be used to indicate which CRUD function is performed.
+
+```
+HTTP GET http://api.example.com/device-management/managed-devices            //Get all devices
+HTTP GET http://api.example.com/device-management/managed-devices/{id}       //Get device for given Id
+```
+
+7. We RECOMMENDED to use query component to filter URI collection
+
+Many times, you will come across requirements where you will need a collection of resources sorted, filtered or limited based on some certain resource attribute.
+For this, do not create new APIs – rather enable sorting, filtering and pagination capabilities in resource collection API and pass the input parameters as query parameters:
+
+```
+http://api.example.com/device-management/managed-devices
+http://api.example.com/device-management/managed-devices?region=USA
+http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ
+http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ&sort=installation-dateRECOMMENDED
+```
 
 ### Install the swagger generation
 
