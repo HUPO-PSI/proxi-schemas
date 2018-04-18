@@ -13,6 +13,7 @@ servers:
   - url: http://www.ebi.ac.uk/pride/proxi/v1/
   - url: http://localhost:8080/proxi/v1/
   - url: http://www.proteomexchange.org/proxi/v1/
+  - url: http://www.peptideatlas.org/proxi/v1/
 paths:
   /datasets:
     get:
