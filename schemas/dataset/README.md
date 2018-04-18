@@ -35,7 +35,6 @@ The current (_v3_) implementation of ProteomeXchange projects has defined the fo
     </DatasetOriginList>
     <SpeciesList>
         <Species>
-            <cvParam cvRef="MS" accession="MS:1001469" name="taxonomy: scientific name" value="Homo sapiens (Human)"/>
             <cvParam cvRef="MS" accession="MS:1001467" name="taxonomy: NCBI TaxID" value="9606"/>
         </Species>
     </SpeciesList>
@@ -45,8 +44,7 @@ The current (_v3_) implementation of ProteomeXchange projects has defined the fo
         </Instrument>
     </InstrumentList>
     <ModificationList>
-        <cvParam cvRef="MOD" accession="MOD:00425" name="monohydroxylated residue"/>
-        <cvParam cvRef="MOD" accession="MOD:00397" name="iodoacetamide derivatized residue"/>
+         <cvParam cvRef="MOD" accession="MOD:00397" name="iodoacetamide derivatized residue"/>
     </ModificationList>
     <ContactList>
         <Contact id="project_submitter">
@@ -94,3 +92,13 @@ The current (_v3_) implementation of ProteomeXchange projects has defined the fo
 </ProteomeXchangeDataset>
 ```
 
+The current version of PROXI schemas for datasets is the following:
+
+_Accession_: The accession of the dataset.
+_title_: Dataset title.
+_summary_: Summary of the dataset.
+_organisms_: List of organisms in Ontology Terms.
+_instruments_: Instruments in Ontology Terms
+_modifications_: PostTranslational Modifications
+_contacts_: Contacts of Submitters and Head of Lab
+```
