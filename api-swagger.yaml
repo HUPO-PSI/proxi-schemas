@@ -13,10 +13,10 @@ servers:
   - url: http://www.ebi.ac.uk/pride/proxi/v1/
   - url: http://localhost:8080/proxi/v1/
 paths:
-  /dataset/findByAccession:
+  /datasets/filters:
      get:
        tags:
-         - dataset
+         - datasets
        description: Find datasets by a list of accessions
        operationId: findByAccession
        parameters:
@@ -34,19 +34,21 @@ paths:
           content:
             application/json:
               schema:
+                type: obejct
                 $ref: '#/components/schemas/Datasets'
             application/xml:
               schema:
+                type: object
                 $ref: '#/components/schemas/Datasets'
         '400':
           description: Bad Request. Invalid Accession Requested
         '404':
           description: No dataset has been found with the requested accessions
 
-  /dataset/findByAttributes:
+  /datasets/findByAttributes:
      get:
        tags:
-         - dataset
+         - datasets
        description: Find datasets by keywords on any of the attributes of a dataset
        operationId: findByAttributes
        parameters:
@@ -64,10 +66,74 @@ paths:
                schema:
                  type: object
                  $ref: "#/components/schemas/Dataset"
+             application/xml:
+               schema:
+                 type: object
+                 $ref: "#/components/schemas/Dataset"
         '400':
-           description: "Bad Request. Invalid keyword Requested"
+           description: Bad Request. Invalid keyword Requested
         '404':
-           description: "No dataset has been found with the requested keyword"
+           description: No dataset has been found with the requested keyword
+
+  /datasets/{datasetAccession}/
+     get:
+       tags:
+         - datasets
+       description: Get a dataset by their accession.
+       operationId: getDatasetByAccession
+       parameters:
+         - name: datasetAccession
+           in: path
+           description: Accession of the dataset in the resource.
+           required: true
+           schema:
+              type: string
+       responses:
+        '200':
+           description: Successful Operation
+           content:
+             application/json:
+               schema:
+                 type: object
+                 $ref: "#/components/schemas/Dataset"
+             application/xml:
+               schema:
+                 type: object
+                 $ref: "#/components/schemas/Dataset"
+        '400':
+           description: Bad Request. Invalid keyword Requested
+        '404':
+           description: No dataset has been found with the requested keyword
+  /datasets/{datasetAccession}/proteins:
+     get:
+       tags:
+         - datasets
+       description: Find the list of Proteins in one dataset
+       operationId: getProteinsByDatasetAccession
+       parameters:
+          - name: datasetAccession
+            in: path
+            description: Dataset Accession
+            required: true
+            schema:
+              type: string
+      responses:
+        '200':
+           description: Successful Operation
+           content:
+              application/json:
+                schema:
+                  type: object
+                  $ref: "#/components/schemas/Proteins"
+              application/xml:
+                schema:
+                  type: object
+                  $ref: "#/components/schemas/Proteins"
+        '400':
+           description: Bad Request. Invalid keyword Requested
+        '404':
+           description: No dataset has been found with the requested keyword
+
 components:
   schemas:
      OntologyTerm:
@@ -152,3 +218,18 @@ components:
        type: array
        items:
          $ref: "#/components/schemas/Dataset"
+
+     Protein:
+       required:
+         - proteinAccession
+         - confidenceScore
+       properties:
+         proteinAccession:
+           type: string
+         confidenceScore:
+           type: object
+           $ref: "#/components/schemas/OntologyTerm"
+     Proteins:
+            type: array
+            items:
+              $ref: "#/components/schemas/Protein"
