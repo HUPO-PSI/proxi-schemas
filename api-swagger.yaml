@@ -138,7 +138,6 @@ paths:
         '404':
            description: No dataset has been found with the requested keyword
 
-
 components:
   schemas:
      OntologyTerm:
