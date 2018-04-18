@@ -12,23 +12,56 @@ info:
 servers:
   - url: http://www.ebi.ac.uk/pride/proxi/v1/
   - url: http://localhost:8080/proxi/v1/
+  - url: http://www.proteomexchange.org/proxi/v1/
 paths:
-  /datasets/filters:
-     get:
-       tags:
-         - datasets
-       description: Find datasets by a list of accessions
-       operationId: findByAccession
-       parameters:
+  /datasets:
+    get:
+      tags:
+        - datasets
+      description: Find datasets by a list of accessions
+      operationId: getDatasets
+      parameters:
          - name: accession
            in: query
            description: Dataset Accessions
-           required: true
+           required: false
            schema:
              type: array
              items:
                type: string
-       responses:
+         - name: attributes
+           in: query
+           description: Keywords to search in the datasets attributes
+           schema:
+             type: array
+             items:
+               type: string
+         - name: size
+           in: query
+           description: Number of Datasets to returned
+           schema:
+             type: integer
+             format: int32
+         - name: page
+           in: query
+           description: Page number
+           required: false
+           schema:
+            type: integer
+         - name: sort
+           in: query
+           schema:
+             type: string
+             enum:
+               - asc
+               - desc
+         - name: sortfield
+           in: query
+           schema:
+             type: array
+             items:
+               type: string
+      responses:
         '200':
           description: Successful Operation
           content:
@@ -45,20 +78,20 @@ paths:
         '404':
           description: No dataset has been found with the requested accessions
 
-  /datasets/findByAttributes:
-     get:
-       tags:
-         - datasets
-       description: Find datasets by keywords on any of the attributes of a dataset
-       operationId: findByAttributes
-       parameters:
-         - name: keyword
-           in: query
-           description: keyword to query all the attributes of a dataset
-           required: true
-           schema:
-             type: string
-       responses:
+  /datasets/{accession}:
+    get:
+      tags:
+        - datasets
+      description: Get a dataset by their accession.
+      operationId: getDatasetByAccession
+      parameters:
+        - name: accession
+          in: path
+          description: Accession of the dataset in the resource.
+          required: true
+          schema:
+            type: string
+      responses:
         '200':
            description: Successful Operation
            content:
@@ -75,49 +108,20 @@ paths:
         '404':
            description: No dataset has been found with the requested keyword
 
-  /datasets/{datasetAccession}/
-     get:
-       tags:
-         - datasets
-       description: Get a dataset by their accession.
-       operationId: getDatasetByAccession
-       parameters:
-         - name: datasetAccession
-           in: path
-           description: Accession of the dataset in the resource.
-           required: true
-           schema:
-              type: string
-       responses:
-        '200':
-           description: Successful Operation
-           content:
-             application/json:
-               schema:
-                 type: object
-                 $ref: "#/components/schemas/Dataset"
-             application/xml:
-               schema:
-                 type: object
-                 $ref: "#/components/schemas/Dataset"
-        '400':
-           description: Bad Request. Invalid keyword Requested
-        '404':
-           description: No dataset has been found with the requested keyword
-  /datasets/{datasetAccession}/proteins:
+  /datasets/{accession}/proteins:
      get:
        tags:
          - datasets
        description: Find the list of Proteins in one dataset
        operationId: getProteinsByDatasetAccession
        parameters:
-          - name: datasetAccession
+          - name: accession
             in: path
             description: Dataset Accession
             required: true
             schema:
               type: string
-      responses:
+       responses:
         '200':
            description: Successful Operation
            content:
@@ -133,6 +137,7 @@ paths:
            description: Bad Request. Invalid keyword Requested
         '404':
            description: No dataset has been found with the requested keyword
+
 
 components:
   schemas:
