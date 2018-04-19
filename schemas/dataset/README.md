@@ -3,7 +3,7 @@
 The dataset object provides information about a proteomics study/dataset/project following
 the ProteomeXchange standards.
 
-The current (_v3_) implementation of ProteomeXchange projects has defined the following fields
+The current (_v3_) ProteomeXchange definition for projects has defined the following fields:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -92,13 +92,22 @@ The current (_v3_) implementation of ProteomeXchange projects has defined the fo
 </ProteomeXchangeDataset>
 ```
 
-The current version of PROXI schemas for datasets is the following:
+The PROXI dataset (_v1_) is defined by the following properties:
 
-_Accession_: The accession of the dataset.
-_title_: Dataset title.
-_summary_: Summary of the dataset.
-_organisms_: List of organisms in Ontology Terms.
-_instruments_: Instruments in Ontology Terms
-_modifications_: PostTranslational Modifications
-_contacts_: Contacts of Submitters and Head of Lab
-```
+ | Field          | Description                            | Type         | Multiplicity   |
+ |----------------|----------------------------------------|--------------|----------------|
+ | accession      | The accession of the dataset.          | string       | 1              |
+ | title          | Dataset Title                          | string       | 1              |
+ | summary        | Dataset description                    | string       | 1              |
+ | organisms      | List of organisms                      | OntologyTerm | 1..*           |
+ | instruments    | List of instruments                    | OntologyTerm | 1..*           |
+ | modifications  | List of Postranslational modifications | OntologyTerm | 1..*           |
+ | contacts       | List of contacts                       | Contact      | 1..*           |
+
+ The attributes _organisms_ , _instruments_, _modifications_ are Ontology based terms, to read more about that
+ check the [_OntologyTerm_ definition](). _Contacts_ are build using the following structure:
+
+  | Field          | Description                            | Type         | Multiplicity   |
+  |----------------|----------------------------------------|--------------|----------------|
+  | contactType    | Contact type (Submitter, LabHead)      | string       | 1              |
+  | attributes     | List of attributes of the contact      | OntologyTerm | 1..*           |
