@@ -46,7 +46,6 @@ where we can identify a single “dataset” using the resource URI “/datasets
 ```
   http://api.example.com/device-management/managed-devices/
   http://api.example.com/device-management/managed-devices 	/*This is much better version*/
-
 ```
 
 3. MUST NOT use underscores ( _ ), instead use ( - ):

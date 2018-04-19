@@ -68,11 +68,9 @@ paths:
           content:
             application/json:
               schema:
-                type: obejct
                 $ref: '#/components/schemas/Datasets'
             application/xml:
               schema:
-                type: object
                 $ref: '#/components/schemas/Datasets'
         '400':
           description: Bad Request. Invalid Accession Requested
