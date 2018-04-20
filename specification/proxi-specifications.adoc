@@ -119,6 +119,154 @@ multiple experiments.
 The key words “MUST,” “MUST NOT,” “REQUIRED,” “SHALL,” “SHALL NOT,” “SHOULD,” “SHOULD NOT,” “RECOMMENDED,”
 “MAY,” and “OPTIONAL” are to be interpreted as described in RFC-2119 <<bradner-1997, (Bradner 1997)>>.
 
+[[naming-notation-conventions]]
+== Notation and Naming Conventions
+
+1. A **resource** SHOULD be represented as a collection. For example, “datasets”
+is a collection of datasets where we can identify a single “dataset” using the
+resource URI “/datasets/{customerId}”.
+
+2. MUST NOT use trailing forward slash (/) in URIs:
+
+```
+  http://api.example.com/device-management/managed-devices/
+  http://api.example.com/device-management/managed-devices 	  // This is much better version
+```
+
+3. MUST NOT use underscores ( _ ), instead use ( - ):
+
+It’s possible to use an underscore in place of hyphen to be used as separator – But depending on the application’s font,
+it’s possible that the underscore (_) character can either get partially obscured or completely hidden in some browsers
+or screens.
+
+```
+http://api.example.com/inventory-management/managed-entities/{id}/install-script-location  //More readable
+http://api.example.com/inventory_management/managed_entities/{id}/install_script_location  //More error prone
+```
+
+4. SHOULD NOT Use uppercase letters in URIs:
+
+When convenient, lowercase letters should be consistently preferred in URI paths.
+**RFC 3986** defines URIs as case-sensitive except for the scheme and host components. e.g.
+
+```
+http://api.example.org/resource/1        //Better representation
+http://api.example.org/Resource/1
+```
+
+5. MUST NOT use file extensions
+
+File extensions look bad and do not add any advantage. Removing them decrease the
+length of URIs as well. No reason to keep them.
+
+```
+http://api.example.com/device-management/managed-devices.xml  /*Do not use it*/
+http://api.example.com/device-management/managed-devices 	/*This is correct URI*/
+```
+
+6. MUST NOT use CRUD function names in URIs
+
+URIs MUST NOT be used to indicate that a CRUD function is performed.
+URIs should be used to uniquely identify resources and not any action upon them.
+HTTP request methods (headers) should be used to indicate which CRUD function is performed.
+
+```
+HTTP GET http://api.example.com/device-management/managed-devices            //Get all devices
+HTTP GET http://api.example.com/device-management/managed-devices/{id}       //Get device for given Id
+```
+
+7. We RECOMMENDED to use query component to filter URI collection
+
+Many times, you will come across requirements where you will need a collection of resources sorted,
+filtered or limited based on some certain resource attribute.
+
+For this, do not create new APIs – rather enable sorting, filtering and pagination capabilities in resource
+collection API and pass the input parameters as query parameters:
+
+```
+http://api.example.com/device-management/managed-devices
+http://api.example.com/device-management/managed-devices?region=USA
+http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ
+http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ&sort=installation-dateRECOMMENDED
+```
+
+[[relationship-to-other-specifications]]
+== Relationship to Other Specifications
+
+The specification described in this document has not been developed in isolation; indeed, it is designed to be complementary to, and thus used in conjunction with, several existing and emerging models. Related specifications include the following:
+
+1.  _mzTab_ (http://www.psidev.info/mztab). mzTab files MAY be used in conjunction with peak lists, although it will be possible to use mzTab with other formats of mass spectra. This document does not assume familiarity with mzML.
+
+
+[[format-specification]]
+== Format specification
+
+This section describes the structure of ProXI API implementation.
+
+* *Field separator* +
+The column delimiter is the Unicode Horizontal Tab character (Unicode codepoint 0009).
+* *File encoding* +
+The UTF-8 encoding of the Unicode character set is the preferred encoding for mzTab files. However, parsers should be able to recognize commonly used encodings.
+* *Case sensitivity* +
+All column labels and field names are case-sensitive.
+* *Line prefix* +
+Every line in an mzTab file MUST start with a three letter code identifying the type of line delimited by a Tab character. The three letter codes are as follows:
+** `MTD` for metadata
+** `SMH` for small molecule table header line (the column labels)
+** `SML` for rows of the small molecule table
+** `SFH` for small molecule feature header line
+** `SMF` for rows of the small molecule feature table
+** `SHE` for small molecule evidence header line
+** `SME` for rows of the small molecule evidence table
+** `COM` for comment lines
+
+* *Header lines* +
+Each table based section (protein, peptide, PSM and small molecule) MUST start with the corresponding header line. These header lines MUST only occur once in the document since each section also MUST only occur once.
+* *Dates* +
+Dates and times MUST be supplied in the ISO 8601 format (“YYYY-MM-DD”, “YYYY-MM-DDTHH:MMZ” respectively).
+* *Decimal separator* +
+In mzTab files the dot (“.”) MUST be used as decimal separator. Thousand separators MUST NOT be used in mzTab files.
+* *Comment lines and empty lines* +
+Comment lines can be placed anywhere in an mzTab file. These lines must start with the three-letter code COM and are ignored by most parsers. Empty lines can also occur anywhere in an mzTab file and are ignored.
+* *Params* +
+mzTab makes use of CV parameters. As mzTab is expected to be used in several experimental environments where parameters might not yet be available for the generated scores etc. all parameters can either report CV parameters or user parameters that only contain a name and a value. +
+Parameters are always reported as `[CV label, accession, name, value]`. Any field that is not available MUST be left empty. +
+ +
+....
+[MS, MS:1001477, SpectraST,]
+[,,A user parameter, The value]
+....
+
+In case, the name of the param contains commas, quotes MUST be added to avoid problems with the parsing: `[label, accession, “first part of the param name, second part of the name”, value]`.
+....
+[MOD, MOD:00648, “N,O-diacetylated L-serine”,]
+....
+
+* *Sample IDs* +
+To be able to supply metadata specific to each sample, ids in the format `sample[1-n]` are used. +
+ +
+....
+MTD sample[1]-species[1] [NEWT, 9606, Homo sapiens (Human), ]
+....
+* *Assay IDs* +
+To be able to supply metadata specific to each assay, ids in the format `assay[1-n]` are used. +
+ +
+....
+MTD assay[1] first assay description
+....
+* *Study variable IDs* +
+To be able to supply metadata specific to each study variable (grouping of assays), ids in the format `study_variable[1-n]` are used.
+....
+MTD study_variable[1]-description Group B (spike-in 0.74 fmol/uL)
+....
+[[sections]]
+=== Sections
+
+mzTab-M files MUST have one Metadata (MTD) section and one Small Molecule (SML) Section. In practice, we expect that most files SHOULD also include one Small Molecule Feature (SMF) section, and one Small Molecule Evidence (SME) Section. Files lacking SMF and SME sections can only present summary data about quantified molecules, without any evidence trail for how those values were derived. It will be left to reading software to determine whether additional validation will be requested such that SMF and SME tables MUST be present.
+
+[[metadata-section]]
+=== Metadata Section
+
 The current (_v3_) ProteomeXchange definition for projects has defined the following fields:
 
 ```xml
