@@ -1,5 +1,0 @@
-openapi: 3.0.0
-Datasets:
-  type: array
-  items:
-   $ref: "./dataset.yaml#/Dataset"
