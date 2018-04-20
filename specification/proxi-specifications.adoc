@@ -112,6 +112,16 @@ resource and which methods are implemented. The API should be self discoverable.
 5. ProXI API should be possible to retrieve information about independent experiment as long as agregation analysis of
 multiple experiments.
 
+[[api-standard-openapi]]
+== API standard (OpenAPI)
+
+The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to
+RESTful APIs which allows both humans and computers to discover and understand the
+capabilities of the service without access to source code, documentation, or through
+network traffic inspection. When properly defined, a consumer can understand and
+interact with the remote service with a minimal amount of implementation logic.
+
+The OpenAPI specification can be read here https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md
 
 [[notational-conventions]]
 == Notational Conventions
