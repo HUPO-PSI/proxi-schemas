@@ -106,21 +106,18 @@ study.
 3. ProXI should enable reporting at different levels of detail: ranging from a simple summary of the final
 results to a detailed reporting including the experimental design.
 
-4. It should be possible to open mzTab-M files with “standard” software such as Microsoft Excel^®^ or Open Office Spreadsheet. This should furthermore improve the usability of the format to people outside the fields of metabolomics.
+4. It should be possible to query a ProXI implementation and retrieve which type of information is provided by the
+resource and which methods are implemented. The API should be self discoverable.
 
-5. mzTab files should make MS derived results easily accessible to scripting languages allowing bioinformaticians to develop software without the overhead of developing sophisticated parsing code. Since mzTab files will be comparatively small, the data from multiple experiments can be processed at once without requiring special resource management techniques.
-
-6. It should be possible to contain the complete final results of an MS-based metabolomics experiment in a single file. This should furthermore reduce the complexity of sharing and processing an experiment’s final results. mzTab-M files should be able to store quantitative values for small molecule identifications.
-
-7. It should be useful as an output format by web-services that can then be readily accessed by tools supporting mzTab-M.
-
-8. It should be possible to directly link a small molecule record to its source spectrum in an external MS data file.
+5. ProXI API should be possible to retrieve information about independent experiment as long as agregation analysis of
+multiple experiments.
 
 
 [[notational-conventions]]
 == Notational Conventions
 
-The key words “MUST,” “MUST NOT,” “REQUIRED,” “SHALL,” “SHALL NOT,” “SHOULD,” “SHOULD NOT,” “RECOMMENDED,” “MAY,” and “OPTIONAL” are to be interpreted as described in RFC-2119 <<bradner-1997, (Bradner 1997)>>.
+The key words “MUST,” “MUST NOT,” “REQUIRED,” “SHALL,” “SHALL NOT,” “SHOULD,” “SHOULD NOT,” “RECOMMENDED,”
+“MAY,” and “OPTIONAL” are to be interpreted as described in RFC-2119 <<bradner-1997, (Bradner 1997)>>.
 
 The current (_v3_) ProteomeXchange definition for projects has defined the following fields:
 
