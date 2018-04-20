@@ -213,16 +213,9 @@ The specification described in this document has not been developed in isolation
 
 This section describes the structure of ProXI API implementation.
 
-* *Field separator* +
-The column delimiter is the Unicode Horizontal Tab character (Unicode codepoint 0009).
-* *File encoding* +
-The UTF-8 encoding of the Unicode character set is the preferred encoding for mzTab files. However, parsers should be able to recognize commonly used encodings.
-* *Case sensitivity* +
-All column labels and field names are case-sensitive.
-* *Line prefix* +
-Every line in an mzTab file MUST start with a three letter code identifying the type of line delimited by a Tab character. The three letter codes are as follows:
-** `MTD` for metadata
-** `SMH` for small molecule table header line (the column labels)
+* *Main entry points* +
+** `datasets` This entry point in the API relate all the datasets in the resource.
+** `protein` Protein information across the resource
 ** `SML` for rows of the small molecule table
 ** `SFH` for small molecule feature header line
 ** `SMF` for rows of the small molecule feature table
