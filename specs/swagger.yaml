@@ -99,6 +99,36 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /datasets/{accession}:
+    get:
+      summary: Get an specific dataset
+      operationId: getDataset
+      tags:
+        - datasets
+      produces:
+          - "application/json"
+      parameters:
+        - name: accession
+          in: path
+          description: Accession of the dataset
+          required: true
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Dataset"
+        '400':
+          description: Bad request. The requested paramters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified paramters.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
 definitions:
   OntologyTerm:
     required:
