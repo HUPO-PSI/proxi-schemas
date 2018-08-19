@@ -42,6 +42,13 @@ paths:
           required: false
           type: integer
           default: 0
+        - name: resultType
+          in: query
+          description: Type of the object to be retrieve Compact or Full dataset
+          required: true
+          type: string
+          enum: [compact, full]
+          default: compact
         - name: species
           in: query
           description: Filter the list of Datasets by Species, multiple species search can be performed by [human, mouse].
