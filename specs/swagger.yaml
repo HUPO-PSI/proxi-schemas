@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   description: "[Proteomics eXpression Interface](https://github.com/HUPO-PSI/proxi-schemas/)"
   version: v1
-  title: Proteomics eXpression Interface
+  title: Proteomics Expression Interface
   contact:
     name: Yasset Perez-Riverol
     email: yperez@ebi.ac.uk
@@ -79,7 +79,7 @@ paths:
           required: false
       responses:
         "200":
-          description: A page of Datasets
+          description: OK
           headers:
             x-next:
               type: string
@@ -88,8 +88,14 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Dataset"
+        '400':
+          description: Bad request. The requested paramters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified paramters.
         default:
-          description: unexpected error
+          description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
 
