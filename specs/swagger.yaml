@@ -87,10 +87,6 @@ paths:
       responses:
         "200":
           description: OK
-          headers:
-            x-next:
-              type: string
-              description: A link to the next page of responses
           schema:
             type: "array"
             items:
