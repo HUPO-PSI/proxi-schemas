@@ -1,0 +1,211 @@
+swagger: "2.0"
+info:
+  description: "[Proteomics eXpression Interface](https://github.com/HUPO-PSI/proxi-schemas/)"
+  version: v1
+  title: Proteomics Expression Interface
+  contact:
+    name: Yasset Perez-Riverol
+    email: yperez@ebi.ac.uk
+  license:
+    name: Apache 2.0
+    url: https://github.com/bigbio/proxi-schemas/LICENSE.md
+schemes:
+  - http
+  - https
+host: www.proteomexchange.org
+basePath: /proxi/v2
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /datasets:
+    get:
+      summary: List of datasets in the respository
+      operationId: listDatasets
+      tags:
+        - datasets
+      produces:
+          - "application/json"
+      parameters:
+        - name: pageSize
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          type: integer
+          default: 100
+        - name: pageNumber
+          in: query
+          description: Current page to be shown paged datasets
+          required: false
+          type: integer
+          default: 0
+        - name: resultType
+          in: query
+          description: Type of the object to be retrieve Compact or Full dataset
+          required: true
+          type: string
+          enum: [compact, full]
+          default: compact
+        - name: species
+          in: query
+          description: Filter the list of Datasets by Species, multiple species search can be performed by [human, mouse].
+          required: false
+          type: string
+        - name: accession
+          in: query
+          description: Filter the list of datasets by Dataset accession, multiple accessions search can be performed by [PXD00001, PXD00002]
+          type: string
+          required: false
+        - name: instrument
+          in: query
+          description: Filter the list of datasets by Instrument, multiple instruments search can be performed by [LTQ, QTOF]
+          type: string
+          required: false
+        - name: contact
+          in: query
+          description: Fitler the list of datasets by Contact information
+          type: string
+          required: false
+        - name: publication
+          in: query
+          description: Filter the list of datasets by Publication information, multiple information search can be performed by [nature methods, 27498275]
+          type: string
+          required: false
+        - name: modification
+          in: query
+          description: Filter the list of datasets by Modification information.
+          type: string
+          required: false
+        - name: search
+          in: query
+          description: Search different keywords into all dataset fields, multiple terms search can be performed by [liver, brain]
+          type: string
+          required: false
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Dataset"
+        '400':
+          description: Bad request. The requested paramters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified paramters.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /datasets/{accession}:
+    get:
+      summary: Get an specific dataset
+      operationId: getDataset
+      tags:
+        - datasets
+      produces:
+          - "application/json"
+      parameters:
+        - name: accession
+          in: path
+          description: Accession of the dataset
+          required: true
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Dataset"
+        '400':
+          description: Bad request. The requested paramters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified paramters.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  OntologyTerm:
+    required:
+       - accession
+       - name
+    properties:
+       accession:
+         type: string
+       name:
+         type: string
+       value:
+         type: string
+       cvLabel:
+         type: string
+  Contact:
+    required:
+       - contactProperties
+    properties:
+       contactProperties:
+         type: array
+         items:
+           $ref: "#/definitions/OntologyTerm"
+  Dataset:
+    required:
+       - accession
+       - title
+       - species
+       - instruments
+       - contacts
+       - publications
+    properties:
+       accession:
+         type: string
+       title:
+         type: string
+       summary:
+         type: string
+       species:
+         type: array
+         items:
+           $ref: "#/definitions/OntologyTerm"
+       instruments:
+         type: array
+         items:
+           $ref: "#/definitions/OntologyTerm"
+       modifications:
+         type: array
+         items:
+           $ref: '#/definitions/OntologyTerm'
+       contacts:
+         type: array
+         items:
+           $ref: "#/definitions/Contact"
+       publications:
+         type: "array"
+         items:
+           $ref: "#/definitions/OntologyTerm"
+       keywords:
+         type: "array"
+         items:
+           $ref: "#/definitions/OntologyTerm"
+       datasetLink:
+           $ref: "#/definitions/OntologyTerm"
+       dataFiles:
+         type: "array"
+         items:
+           $ref: "#/definitions/OntologyTerm"
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
