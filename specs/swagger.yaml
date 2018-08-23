@@ -146,19 +146,11 @@ definitions:
          type: string
        cvLabel:
          type: string
-  Contact:
+  OntologyTermList:
     required:
-       - contactProperties
+      - terms
     properties:
-       contactProperties:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTerm"
-  Publication:
-    required:
-      - publicationProperties
-    properties:
-      contactProperties:
+      terms:
          type: array
          items:
            $ref: "#/definitions/OntologyTerm"
@@ -180,7 +172,7 @@ definitions:
        species:
          type: array
          items:
-           $ref: "#/definitions/OntologyTerm"
+           $ref: "#/definitions/OntologyTermList"
        instruments:
          type: array
          items:
@@ -188,15 +180,15 @@ definitions:
        modifications:
          type: array
          items:
-           $ref: '#/definitions/OntologyTerm'
+           $ref: "#/definitions/OntologyTerm"
        contacts:
          type: array
          items:
-           $ref: "#/definitions/Contact"
+           $ref: "#/definitions/OntologyTermList"
        publications:
          type: "array"
          items:
-           $ref: "#/definitions/Publication"
+           $ref: "#/definitions/OntologyTermList"
        keywords:
          type: "array"
          items:
