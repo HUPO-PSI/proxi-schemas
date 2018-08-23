@@ -32,13 +32,13 @@ paths:
       parameters:
         - name: pageSize
           in: query
-          description: How many items to return at one time (default 100)
+          description: How many items to return at one time (default 100, max 100)
           required: false
           type: integer
           default: 100
         - name: pageNumber
           in: query
-          description: Current page to be shown paged datasets (first page default is 0?? or better 1?)
+          description: Current page to be shown paged datasets (default page 1)
           required: false
           type: integer
           default: 0
