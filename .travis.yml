@@ -6,10 +6,11 @@ services:
   - docker
 
 before_install:
+  - mkdir -p output
   - docker pull asciidoctor/docker-asciidoctor
 
 script:
-  - docker run -v $TRAVIS_BUILD_DIR/specs/proxi-specifications.adoc/:/documents/ --name asciidoc-to-pdf asciidoctor/docker-asciidoctor asciidoctor-pdf -d book -D /documents/ proxi-specifications.adoc
+  - docker run -v $TRAVIS_BUILD_DIR/specs/:/documents/ --name asciidoc-to-pdf asciidoctor/docker-asciidoctor asciidoctor-pdf -d book -D /documents/ proxi-specifications.adoc
 
 after_error:
   - docker logs asciidoc-to-pdf
@@ -18,8 +19,11 @@ after_failure:
   - docker logs asciidoc-to-pdf
 
 after_success:
-  .travis/push.sh
 
-env:
-  global:
-    secure: hZJlqgOzA2zIUJSWIka0PylqNaTkfHq+kS48RrHmocrK0vLyCW7ECWrzez2f2RVdTNzPi0b+yJq2uCbFfWjImZqg+XY1I75/CVVdSYMk7PJkYZ/iBDixMYY8CAkRRd5yZft9uZAdZzR4KLCPN18n7qfISv/M9VA8989NKcVyiEU=
+deploy:
+  provider: master
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master
