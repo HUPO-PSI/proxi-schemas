@@ -130,7 +130,9 @@ The OpenAPI specification can be read here https://github.com/OAI/OpenAPI-Specif
 
 
 [[naming-notation-conventions]]
-== Notation and Naming Conventions
+== API conventions
+
+=== Naming conventions
 
 1. A **resource** SHOULD be represented as a collection. For example, “datasets” is a collection of datasets where we can identify a single “dataset” using the
 resource URI “/datasets/{accession}”.
@@ -184,6 +186,9 @@ http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets                         //G
 http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/{accession}             //Get datasets for given Accession
 ```
 
+[[filtering-collections]]
+=== Filtering collections
+
 7. We RECOMMENDED to use query component to filter URI collection
 
 Many times, you will come across requirements where you will need a collection of resources sorted,
@@ -195,6 +200,9 @@ collection API and pass the input parameters as query parameters:
 ```
 http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets?species=Human
 ```
+
+[[compact-full-objects]]
+==== Compact vs Full Object versions
 
 8. We RECOMMENDED the use of **Compact** version of an object as default behavior for collections end-points.
 
@@ -434,5 +442,7 @@ Retrieving datasets will be performed using the **datasets** entry point:
 http://www.ebi.ac.uk/pride/archive/proxy/v1/datasets
 
 ```
+
+This entry point will retrieve a collection of datasets from the specific resources. Each collection in ProXI can be filter to refine the collection objects using the datasets properties (see <<filtering-collections>>).
 
 
