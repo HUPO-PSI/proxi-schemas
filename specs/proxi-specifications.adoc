@@ -209,6 +209,7 @@ The Compact version will contains all the mandatory attributes for an Object. Wh
 [[format-specification]]
 == Format specification
 
+[[ontology-cv-term]]
 === Representing Ontology Terms
 
 Each object in **ProXI** API will be heavy represented using controlled vocabulary (CV) terms (https://www.ebi.ac.uk/ols/index). An ontology term will be represent by a cvLabel (name of the Ontology database), accession (accession of the  Term in the Ontology database), name (name of the Term in the Ontology database), value (value of the a parametrized Term).
@@ -230,25 +231,52 @@ The **cvLabel** and **name** MUST be provided, the **cvLabel** is RECOMMENDED an
 
 A ProteomeXchange dataset contains the minimum metadata to describe a Proteomics experiments (http://www.proteomexchange.org/docs/guidelines_px.pdf). The ProXI dataset endpoint will retrive all the datasets from ProteomeXchange members including datasets after ProteomeXchange creation (PXD0000001) or internal datasets (MSVnnn - MassIVE or PRD000001 - PRIDE or PAe00002 - PeptideAtlas).
 
-The	philosophy behind the design of **Dataset** schema is to keep it as flexible as possible with an overall structure based on the heavy use of controlled vocabulary (CV) terms.
+The	philosophy behind the design of **Dataset** schema is to keep it as flexible as possible with an overall structure based on the heavy use of controlled vocabulary (CV) terms <<ontology-cv-term>>.
 
-This	is	the	list	of	elements	in	the	schema:
-- ProteomeXchangeDataset:	 This	 is	 the	 root	 element	 with	 mandatory	 attributes.	 The
-formatVersion attribute	could	 be	 used	if	an	announcement	 has	 to	 be	 repeated	with	 some	 (minor)
-changes,	e.g.	the	addition	of	a	publication	reference.
-- CvList:	This	element	lists	all	CVs/Ontologies	that	were	used	to	populate	the	file.	This	ensures	that
-used	CV	terms	can	be	traced	to	their	origin	and	definition.
-- DatasetSummary:	This	element	contains	some	basic	information	about	the	submission,	like	‘title’,
-‘announcement	date’	or	‘project	description’.	Moreover,	some	additional	information	about	the	type
-of	submission (fully	supported	(‘complete’)	or	not	(‘partial’)	by	the	receiving	repository),	and	whether
-a	related	manuscript	has	already	been	published	is	also	included	in	this	element.
-- DatasetIdentifierList:	 This	 element	 includes	 the	 identifiers	 that	 will	 unambiguously
-characterize	the	dataset:	for	instance,	the	PX	accession	number	and	the	Digital	Object	Identifier	(DOI),
-if	relevant.
-- DatasetOriginList:	 The	 aim	 of	 this	 element	 is	 to	 know	 if	 the	 dataset	 constitutes	 a	 new
-submission,	or	 the	 submission	describes	 the	 reprocessing	of	a	previously	 submitted	dataset.	Every
-reanalysis	performed	on	a	particular	dataset	gets	a	different	PX	accession	number.
-- SpeciesList:	Contains	information	about	the	species	included	in	the	dataset.
+This is the list of elements in the schema:
+
+- _Dataset_: This is the root element with mandatory attributes.
+
+- _accession_: The unique accession of the dataset in the resource (e.g. PXD008339).
+
+- _title_: The title of the dataset (e.g. Characterisation of proteome of a novel Escherichia coli strain exhibiting mucoviscous phenotype.)
+
+- _summary_: Description of the dataset (e.g. Protein expression by E. coli 26561 during the late-exponential phase of cultures under anaerobic conditions was examined. E. coli 26561 is a multidrug resistant (MDR) and shows an unusual hyper-mucoviscous phenotype. Resistance includes ESBL (CTX-M-14) and proteome was determined with and without exposure to sub-MIC concentrations of the 3rd generation cephalosporin ceftazidime.)
+
+- _species_: Contains information about the species included in the dataset as Ontology Terms.
+
+```json
+[
+  {
+    cvLabel:"MS"
+    accession:"MS:1001469"
+    name:"taxonomy: scientific name",
+    value:"Escherichia coli"
+  },
+  {
+    cvLabel:"MS"
+    accession:"MS:1001467"
+    name:"taxonomy: NCBI TaxID",
+    value:"562"
+  }
+]
+```
+
+- _instruments_:
+
+- _contacts_:
+
+- _publications_:
+
+- _modifications_:
+
+- _keywords_:
+
+- _datasetLink_:
+
+- _dataFiles_:
+
+- SpeciesList:
 - InstrumentList:	 Element	 holding	 the	 overall	 information	 about	 the	 instrumentation	 used	 in	 the
 generation	of	the	data.
 - ModificationList:	 All	 protein	 modifications	 (natural	 and	 artificial)	 are	 listed	 in	 this	 record
