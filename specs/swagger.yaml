@@ -154,6 +154,14 @@ definitions:
          type: array
          items:
            $ref: "#/definitions/OntologyTerm"
+  Publication:
+    required:
+      - publicationProperties
+    properties:
+      contactProperties:
+         type: array
+         items:
+           $ref: "#/definitions/OntologyTerm"
   Dataset:
     required:
        - accession
@@ -188,7 +196,7 @@ definitions:
        publications:
          type: "array"
          items:
-           $ref: "#/definitions/OntologyTerm"
+           $ref: "#/definitions/Publication"
        keywords:
          type: "array"
          items:
