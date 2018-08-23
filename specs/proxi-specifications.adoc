@@ -229,6 +229,9 @@ The **cvLabel** and **name** MUST be provided, the **cvLabel** is RECOMMENDED an
 
 === Retrieving Dataset Information
 
+
+==== Dataset Object schema
+
 A ProteomeXchange dataset contains the minimum metadata to describe a Proteomics experiments (http://www.proteomexchange.org/docs/guidelines_px.pdf). The ProXI dataset endpoint will retrive all the datasets from ProteomeXchange members including datasets after ProteomeXchange creation (PXD0000001) or internal datasets (MSVnnn - MassIVE or PRD000001 - PRIDE or PAe00002 - PeptideAtlas).
 
 The	philosophy behind the design of **Dataset** schema is to keep it as flexible as possible with an overall structure based on the heavy use of controlled vocabulary (CV) terms <<ontology-cv-term>>.
@@ -237,13 +240,13 @@ This is the list of elements in the schema:
 
 - _Dataset_: This is the root element with mandatory attributes.
 
-- _accession_: The unique accession of the dataset in the resource (e.g. PXD008339).
+- _accession_ (**required**): The unique accession of the dataset in the resource (e.g. PXD008339).
 
-- _title_: The title of the dataset (e.g. Characterisation of proteome of a novel Escherichia coli strain exhibiting mucoviscous phenotype.)
+- _title_ (**required**): The title of the dataset (e.g. Characterisation of proteome of a novel Escherichia coli strain exhibiting mucoviscous phenotype.)
 
 - _summary_: Description of the dataset (e.g. Protein expression by E. coli 26561 during the late-exponential phase of cultures under anaerobic conditions was examined. E. coli 26561 is a multidrug resistant (MDR) and shows an unusual hyper-mucoviscous phenotype. Resistance includes ESBL (CTX-M-14) and proteome was determined with and without exposure to sub-MIC concentrations of the 3rd generation cephalosporin ceftazidime.)
 
-- _species_: Contains information about the species included in the dataset as Ontology Terms.
+- _species_ (**required**): Contains information about the species included in the dataset as Ontology Terms.
 
 ```json
 [
@@ -262,7 +265,7 @@ This is the list of elements in the schema:
 ]
 ```
 
-- _instruments_: Element holding the overall information about the instrumentation used in the generation of the data as Ontology Terms.
+- _instruments_ (**required**): Element holding the overall information about the instrumentation used in the generation of the data as Ontology Terms.
 
 ```json
 [
@@ -275,7 +278,7 @@ This is the list of elements in the schema:
 ```
 **Note**: The previous example contains an Ontology Term whihout **value**. Please check the <<ontology-cv-term>> for a full description of Ontology Terms Objects.
 
-- _contacts_: Information about	the	researchers	involved in	the	generation	and	submission	of the dataset. Each Contact will be a list of Ontology terms including name of the contact, email, affiliation or role (lab head).
+- _contacts_ (**required**): Information about	the	researchers	involved in	the	generation	and	submission	of the dataset. Each Contact will be a list of Ontology terms including name of the contact, email, affiliation or role (lab head).
 
 ```json
 [
@@ -324,7 +327,7 @@ This is the list of elements in the schema:
 ]
 ```
 
-- _publications_: The list of publications that the dataset has	generated.
+- _publications_ (**required**): The list of publications that the dataset has	generated.
 
 ```json
 [
@@ -365,7 +368,71 @@ This is the list of elements in the schema:
 
 - _keywords_: One or more CV terms that define a list of keywords that may be attributed to the dataset.
 
+```json
+[
+  {
+   cvLabel:"MS",
+   accession:"MS:1001925",
+   name:"submitter keyword",
+   value: "Escherichia coli, mucoviscous, anaerobic, antibiotic, MIC, ceftazidime, TMT, shotgun, quantification"
+  },
+  {
+   cvLabel:"MS",
+   accession:"MS:1001926",
+   name="curator keyword",
+   value:"Biological"
+  }
+]
+
+```
+
 - _datasetLink_: List of links	that will allow access to the data. Different links may be used for different ways of accessing the data (for example FTP download or repository web link) or for different repositories hosting the same data.
 
+```json
+[
+       {
+         cvLabel:"PRIDE",
+         accession:"PRIDE:0000411",
+         name: "Dataset FTP location",
+         value: "ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/08/PXD008339"
+        }
+        {
+         cvLabel:"MS",
+         accession:"MS:1001930",
+         name:"PRIDE project URI",
+         value:"http://www.ebi.ac.uk/pride/archive/projects/PXD008339"
+        }
+]
+```
+
 - _dataFiles_: Optional element to provide individual links to all the submitted files (mass spectrometer output files,	search engine	output	files, etc) belonging to the dataset.
+
+```json
+[
+  {
+   cvLabel:"PRIDE",
+   accession:"PRIDE:0000404",
+   name:"Associated raw file URI",
+   value:"ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/08/PXD008339/2781_Phos_1.raw"
+  },
+  {
+   cvLabel:"PRIDE",
+   accession:"PRIDE:0000404",
+   name:"Associated raw file URI",
+   value:"ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/08/PXD008339/2781_Phos_2.raw"
+  }
+]
+
+```
+
+
+==== Dataset API entry point
+
+Retrieving datasets will be performed using the **datasets** entry point:
+
+```
+http://www.ebi.ac.uk/pride/archive/proxy/v1/datasets
+
+```
+
 
