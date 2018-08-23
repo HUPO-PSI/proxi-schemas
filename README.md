@@ -8,7 +8,7 @@ of exchanging proteomics information between ProteomeXchange data partners and c
 
 ## Structure of the Repository
 
-- meetgins: Contains all the meeting discussions around the API.
+- meetings: Contains all the meeting discussions around the API.
 - specs: Specifications folder including:
    - The swagger.yaml file contains the current definition of the API.
    - proxi-specifications.adoc : Ansible document definition, with examplesm, notations around the API.
