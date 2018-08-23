@@ -21,9 +21,11 @@ after_failure:
 after_success:
 
 deploy:
-  provider: master
+  provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
+  target-branch: master
   keep-history: true
+  verbose: true
   on:
     branch: master
