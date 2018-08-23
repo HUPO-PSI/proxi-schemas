@@ -209,3 +209,76 @@ The Compact version will contains all the mandatory attributes for an Object. Wh
 [[format-specification]]
 == Format specification
 
+=== Representing Ontology Terms
+
+Each object in **ProXI** API will be heavy represented using controlled vocabulary (CV) terms (https://www.ebi.ac.uk/ols/index). An ontology term will be represent by a cvLabel (name of the Ontology database), accession (accession of the  Term in the Ontology database), name (name of the Term in the Ontology database), value (value of the a parametrized Term).
+
+```json
+
+{
+   cvLabel: "PSI-MS",
+   accession: "MS:1000449",
+   name: "LTQ Orbitrap"
+}
+
+```
+
+The **cvLabel** and **name** MUST be provided, the **cvLabel** is RECOMMENDED and **value** is OPTIONAL.
+
+
+=== Retrieving Dataset Information
+
+A ProteomeXchange dataset contains the minimum metadata to describe a Proteomics experiments (http://www.proteomexchange.org/docs/guidelines_px.pdf). The ProXI dataset endpoint will retrive all the datasets from ProteomeXchange members including datasets after ProteomeXchange creation (PXD0000001) or internal datasets (MSVnnn - MassIVE or PRD000001 - PRIDE or PAe00002 - PeptideAtlas).
+
+The	philosophy behind the design of **Dataset** schema is to keep it as flexible as possible with an overall structure based on the heavy use of controlled vocabulary (CV) terms.
+
+This	is	the	list	of	elements	in	the	schema:
+- ProteomeXchangeDataset:	 This	 is	 the	 root	 element	 with	 mandatory	 attributes.	 The
+formatVersion attribute	could	 be	 used	if	an	announcement	 has	 to	 be	 repeated	with	 some	 (minor)
+changes,	e.g.	the	addition	of	a	publication	reference.
+- CvList:	This	element	lists	all	CVs/Ontologies	that	were	used	to	populate	the	file.	This	ensures	that
+used	CV	terms	can	be	traced	to	their	origin	and	definition.
+- DatasetSummary:	This	element	contains	some	basic	information	about	the	submission,	like	‘title’,
+‘announcement	date’	or	‘project	description’.	Moreover,	some	additional	information	about	the	type
+of	submission (fully	supported	(‘complete’)	or	not	(‘partial’)	by	the	receiving	repository),	and	whether
+a	related	manuscript	has	already	been	published	is	also	included	in	this	element.
+- DatasetIdentifierList:	 This	 element	 includes	 the	 identifiers	 that	 will	 unambiguously
+characterize	the	dataset:	for	instance,	the	PX	accession	number	and	the	Digital	Object	Identifier	(DOI),
+if	relevant.
+- DatasetOriginList:	 The	 aim	 of	 this	 element	 is	 to	 know	 if	 the	 dataset	 constitutes	 a	 new
+submission,	or	 the	 submission	describes	 the	 reprocessing	of	a	previously	 submitted	dataset.	Every
+reanalysis	performed	on	a	particular	dataset	gets	a	different	PX	accession	number.
+- SpeciesList:	Contains	information	about	the	species	included	in	the	dataset.
+- InstrumentList:	 Element	 holding	 the	 overall	 information	 about	 the	 instrumentation	 used	 in	 the
+generation	of	the	data.
+- ModificationList:	 All	 protein	 modifications	 (natural	 and	 artificial)	 are	 listed	 in	 this	 record
+(specified	as	CV	terms).	If	a	dataset	does	not	contain	any	modifications,	it	is	also	explicitly	announced
+here	with	a	specific	CV	term.
+- ContactList:	Information	about	the	researchers	involved	in	the	generation	and	submission	of	the
+dataset.
+- PublicationList:	The	list	of	publications	that	the	dataset	has	generated.
+- KeywordList: One	or	more	CV	terms	that	define	a	list	of	keywords	that	may	be	attributed	to	the
+dataset.
+- FullDatasetLinkList:	List	of	links	that	will	allow	access	to	the	data.	Different	links	may	be	used
+for	 different	ways	 of	accessing	 the	 data	 (for	example	FTP	 download	 or	 repository	web	link)	 or	 for
+different	repositories	hosting	the	same	data.
+- DatasetFileList:	Optional	element	 to	 provide	individual	links	 to	all	 the	 submitted	 files	 (mass
+spectrometer	output	files,	search	engine	output	files,	etc)	belonging	to	the	dataset.
+- RepositoryRecordList:	 This	 optional	 element	 allows	 a	 repository	 to	 report	 information	 with
+more	granularity	if	available.	For	example	links	and	information	could	be	provided	for	each	part/result
+file	of	a	larger	dataset.
+- AdditionalInformation:	Optional	element	that	includes	any	other	CV	terms	that	can	be	used	to
+describe	the	dataset.
+- ChangeLog:	An	element that	records	comments	for	all	changes	made	to	the	file	since	its	first	release.
+This	element	is	optional	for	the	first	release	of	the	PX	XML only,	all	successive	releases	must	provide
+ProteomeXchange	and	proteomics	data	submission	v2.0 15	September	2016
+12
+a	change	log	entry.
+Different	versions	of	the	PX	XML	announcement	for	the	same	PX	datasets	can	be	made	available	to
+ProteomeCentral.	This	happens	if	some	information	included	there	is	updated	(for	instance,	the	final
+version	of	the	reference	of	a	publication).	All	the	versions	are	tracked	and	kept	in	ProteomeCentral.
+After	reprocessing	of	a	dataset,	if	the	resulting	new	results	are	submitted	to	PX,	a	new	PX	identifier
+will	be	generated	but	also	 the	original	PX	accession	number	will	be	 retained,	 to	allow	coordinated
+search	 for	 different	 views	 of	 data	 from	 one	 submission.	 This	 ensures	 that	 a	 simple	 one-time
+submission	 from	 a	 contributor	 is	 automatically	 distributed	 to	 all	 PX	 repositories	 with	 sufficient
+information.
