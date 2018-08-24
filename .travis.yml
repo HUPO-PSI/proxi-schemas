@@ -1,0 +1,31 @@
+sudo: required
+
+install: false
+
+services:
+  - docker
+
+before_install:
+  - mkdir -p output
+  - docker pull asciidoctor/docker-asciidoctor
+
+script:
+  - docker run -v $TRAVIS_BUILD_DIR/specs/:/documents/ --name asciidoc-to-pdf asciidoctor/docker-asciidoctor asciidoctor-pdf -d book -D /documents/ proxi-specifications.adoc
+
+after_error:
+  - docker logs asciidoc-to-pdf
+
+after_failure:
+  - docker logs asciidoc-to-pdf
+
+after_success:
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  target-branch: master
+  keep-history: true
+  verbose: true
+  on:
+    branch: master

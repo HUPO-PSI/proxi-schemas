@@ -1,4 +1,4 @@
-= ProXI: ProteomeXchange Expression Interface Specification
+= ProXI: Proteomics eXpression interface specification
 :sectnums:
 :toc: left
 :doctype: book
@@ -24,7 +24,7 @@ endif::[]
 == Preface
 _Status of This Document_
 
-This document presents the final specification of the ProXI (The ProteomeXchange Expression Interface)
+This document presents the final specification of the ProXI (The Proteomics expression Interface)
 an API specification developed by members of the Human Proteome Organisation (HUPO)
 Proteomics Standards Initiative (PSI) and ProteomeXchange partners. Distribution is unlimited.
 
@@ -33,7 +33,7 @@ _Version of This Document_
 The current version of this document is: version 1.0.0-draft, Apr 2018.
 
 The latest draft version of this document may be found at
-https://github.com/bigbio/proxi-schemas.
+https://github.com/HUPI-PSI/proxi-schemas.
 
 [abstract]
 [[abstract]]
@@ -56,72 +56,62 @@ defines a API specification to report proteomics results.
 [[background]]
 === Background
 
-This document addresses the systematic description of peptide/protein
-identification and quantification data retrieved from mass spectrometry (MS)-based
-experiments in public proteomics databases
+Protein expression information (identification and quantification) is fundamental for understanding the function of the living organisms. Consequently, more and more research groups are working in this domain. An increasing amount of the mass spectrometry (MS)-based proteomics data generated is made available in public proteomics repositories such as PRIDE (www.ebi.ac.uk/pride/) and PeptideAtlas (wwww.peptideatlas.org). In addition, protein expression information can be accessed in other resources like the antibody-based Human Protein Atlas  and protein knowledge bases such as UniProt or neXtProt. At present, scientists need to access all the different proteomics resources when they want to get all information about a given protein. The alternative is to access knowledge bases such as UniProt or neXtProt, but the amount of data coming from MS proteomics repositories in these resources is still limited.
 
-ProXI is intended as a common interface across all major ProteomeXchange
-partners to exchange peptide/protein evidences
-deposited in public proteomics databases.
+The main goal behind the development of ProXI (Proteomics eXpression Interface) is to support researchers by making possible a distributed search of protein expression data through heterogeneous resources like the ones outlined above, among others.
 
-ProXI has been developed with a view to support the following general tasks
-(more specific use cases are provided in <<use-cases-for-mztab>>):
+The primary aim of project is to enable a biology-centric distributed search for protein expression data in bioinformatics resources taking into account metadata such as location (e.g. tissue, cell type) and level of expression, detection in disease states, etc. ProXI will provide a common entry point for showing information coming from different data resources.
 
-1.  _Facilitate the sharing of final experimental results deposited in public databases.
-2.  _Facilitate the interaction of public proteomics databases with other omics resources such as metabolomics and gene expression databases
-3.  _Act as an output format of (web-) services_ that report MS-based results and thus can produce standardized result pages.
-4.  _Be able to link to the external experimental evidence_ e.g. by referencing back to spectra files.
+PROXI will be developed with the following general tasks in mind (more specific use cases are provided in <<use-cases-for-proxi>>):
 
-This document presents a specification, not a tutorial. As such, the presentation of technical details is deliberately direct.
-The role of the text is to describe the model and justify design decisions made. The document does not discuss how the models should be used in practice,
-consider tool support for data capture or storage, or provide comprehensive examples of the models in use. It is anticipated that tutorial material will be developed
-independently of this specification.
+T1. Integrate protein and peptide expression information from ProteomeXchange partners and potentially others.
+
+T2. Act as an output format of (web-) _services_ that report MS-based results and thus can produce standardized result pages.
+
+T5. Define a common query language (PXQL) as a way to allow more powerful and flexible queries, by using a specific syntax.
+
+T6. Implement of a standard REST web service and service registry containing a defined list of well-documented methods.
+
+
+**Note**: This document presents a specification, not a tutorial. As such, the presentation of technical details is deliberately direct.
+
 
 [[document-structure]]
 === Document Structure
 
-The remainder of this document is structured as follows. <<use-cases-for-mztab>> lists use cases ProXI
-is designed to support.
-<<notational-conventions>> describes the terminology used.
-<<relationships-to-other-specifications>> describes how the specification presented
-in <<format-specification>> relates to other specifications, both those that it extends and
-those that it is intended to complement. <<resolved-design-and-scope-issues>>
-discusses the reasoning behind several design decisions taken.
-<<format-specification>> contains the documentation of the file. <<non-supported-use-cases>> lists use cases
-that are currently not supported. Conclusions are presented in <<conclusions>>.
+The remainder of this document is structured as follows.
 
-[[use-cases-for-mztab]]
-== Use Cases for mzTab
+<<use-cases-for-proxi>> lists use cases ProXI is designed to support.
+
+<<notational-conventions>> describes the terminology used in this document following the OpenAPI specifications <<api-standard-openapi>>
+
+<<resolved-design-and-scope-issues>> discusses the reasoning behind several design decisions taken.
+
+<<format-specification>> contains the documentation of the file.
+
+<<non-supported-use-cases>> lists use cases that are currently not supported.
+
+Conclusions are presented in <<conclusions>>.
+
+[[use-cases-for-proxi]]
+== Use Cases for ProXI
 
 The following cases of usage have driven the development of the ProXI data model,
 and are used to define the scope of the format in version 1.0.
 
-1. ProXI API should be simple enough to make proteomics results accessible to people outside the respective
-fields. This should facilitate the sharing of data beyond the borders of the fields and make it accessible
-to non-experts.
+1. ProXI API should be simple enough to make proteomics results accessible to people outside the respective fields. This should facilitate the sharing of
+data beyond the borders of the fields and make it accessible to non-experts.
 
-2. ProXI should contain sufficient information to provide biological insights of all findings in a proteomics
-study.
+2. ProXI should contain sufficient information to provide biological insights of all findings in a proteomics study.
 
-3. ProXI should enable reporting at different levels of detail: ranging from a simple summary of the final
-results to a detailed reporting including the experimental design.
+3. ProXI should enable reporting at different levels of detail: ranging from a simple dataset summary, experimental design to final quantitative information.
 
-4. It should be possible to query a ProXI implementation and retrieve which type of information is provided by the
+4. It should develop and provide a Query Language (PXQL) to query mass spectrometry data server by different repositories.
+
+4. It should be possible to query any ProXI implementation and retrieve which type of information is provided by the
 resource and which methods are implemented. The API should be self discoverable.
 
-5. ProXI API should be possible to retrieve information about independent experiment as long as agregation analysis of
-multiple experiments.
-
-[[api-standard-openapi]]
-== API standard (OpenAPI)
-
-The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to
-RESTful APIs which allows both humans and computers to discover and understand the
-capabilities of the service without access to source code, documentation, or through
-network traffic inspection. When properly defined, a consumer can understand and
-interact with the remote service with a minimal amount of implementation logic.
-
-The OpenAPI specification can be read here https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md
+5. ProXI API should be possible to retrieve information about independent experiment as long as aggregation analysis of multiple experiments.
 
 [[notational-conventions]]
 == Notational Conventions
@@ -129,18 +119,29 @@ The OpenAPI specification can be read here https://github.com/OAI/OpenAPI-Specif
 The key words “MUST,” “MUST NOT,” “REQUIRED,” “SHALL,” “SHALL NOT,” “SHOULD,” “SHOULD NOT,” “RECOMMENDED,”
 “MAY,” and “OPTIONAL” are to be interpreted as described in RFC-2119 <<bradner-1997, (Bradner 1997)>>.
 
-[[naming-notation-conventions]]
-== Notation and Naming Conventions
+[[api-standard-openapi]]
+== API standard (OpenAPI)
 
-1. A **resource** SHOULD be represented as a collection. For example, “datasets”
-is a collection of datasets where we can identify a single “dataset” using the
-resource URI “/datasets/{customerId}”.
+The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the
+capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and
+interact with the remote service with a minimal amount of implementation logic.
+
+The OpenAPI specification can be read here https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md
+
+
+[[naming-notation-conventions]]
+== API conventions
+
+=== Naming conventions
+
+1. A **resource** SHOULD be represented as a collection. For example, “datasets” is a collection of datasets where we can identify a single “dataset” using the
+resource URI “/datasets/{accession}”.
 
 2. MUST NOT use trailing forward slash (/) in URIs:
 
 ```
-  http://api.example.com/device-management/managed-devices/
-  http://api.example.com/device-management/managed-devices 	  // This is much better version
+  http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/
+  http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets 	  // This is much better version
 ```
 
 3. MUST NOT use underscores ( _ ), instead use ( - ):
@@ -150,8 +151,8 @@ it’s possible that the underscore (_) character can either get partially obscu
 or screens.
 
 ```
-http://api.example.com/inventory-management/managed-entities/{id}/install-script-location  //More readable
-http://api.example.com/inventory_management/managed_entities/{id}/install_script_location  //More error prone
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001/proteins/QPR001/peptides-scores   //More readable
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001/proteins/QPR001/peptides_scores  //More error prone
 ```
 
 4. SHOULD NOT Use uppercase letters in URIs:
@@ -160,8 +161,8 @@ When convenient, lowercase letters should be consistently preferred in URI paths
 **RFC 3986** defines URIs as case-sensitive except for the scheme and host components. e.g.
 
 ```
-http://api.example.org/resource/1        //Better representation
-http://api.example.org/Resource/1
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001        // Better representation
+http://www.ebi.ac.uk/pride/archive/proxi/v1/Datasets/PXD000001
 ```
 
 5. MUST NOT use file extensions
@@ -170,8 +171,8 @@ File extensions look bad and do not add any advantage. Removing them decrease th
 length of URIs as well. No reason to keep them.
 
 ```
-http://api.example.com/device-management/managed-devices.xml  /*Do not use it*/
-http://api.example.com/device-management/managed-devices 	/*This is correct URI*/
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001.json
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001	      // This is correct URI
 ```
 
 6. MUST NOT use CRUD function names in URIs
@@ -181,9 +182,12 @@ URIs should be used to uniquely identify resources and not any action upon them.
 HTTP request methods (headers) should be used to indicate which CRUD function is performed.
 
 ```
-HTTP GET http://api.example.com/device-management/managed-devices            //Get all devices
-HTTP GET http://api.example.com/device-management/managed-devices/{id}       //Get device for given Id
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets                         //Get all datasets
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/{accession}             //Get datasets for given Accession
 ```
+
+[[filtering-collections]]
+=== Filtering collections
 
 7. We RECOMMENDED to use query component to filter URI collection
 
@@ -194,187 +198,251 @@ For this, do not create new APIs – rather enable sorting, filtering and pagina
 collection API and pass the input parameters as query parameters:
 
 ```
-http://api.example.com/device-management/managed-devices
-http://api.example.com/device-management/managed-devices?region=USA
-http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ
-http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ&sort=installation-dateRECOMMENDED
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets?species=Human
 ```
 
-[[relationship-to-other-specifications]]
-== Relationship to Other Specifications
+[[compact-full-objects]]
+==== Compact vs Full Object versions
 
-The specification described in this document has not been developed in isolation; indeed, it is designed to be complementary to, and thus used in conjunction with, several existing and emerging models. Related specifications include the following:
+8. We RECOMMENDED the use of **Compact** version of an object as default behavior for collections end-points.
 
-1.  _mzTab_ (http://www.psidev.info/mztab). mzTab files MAY be used in conjunction with peak lists, although it will be possible to use mzTab with other formats of mass spectra. This document does not assume familiarity with mzML.
+Each object in the API MUST provide two flavours (Compact or Full). The **Compact** version of an object will be used when retrieve collections of the Object, for example:
 
+```
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets
+```
+
+The Compact version will contains all the mandatory attributes for an Object. When designing each Data Object, mandatory fields should be the Minimum Information requeried to identified the object.
 
 [[format-specification]]
 == Format specification
 
-This section describes the structure of ProXI API implementation.
+[[ontology-cv-term]]
+=== Representing Ontology Terms
 
-* *Main entry points* +
-** `datasets` This entry point in the API relate all the datasets in the resource.
-** `protein` Protein information across the resource
-** `SML` for rows of the small molecule table
-** `SFH` for small molecule feature header line
-** `SMF` for rows of the small molecule feature table
-** `SHE` for small molecule evidence header line
-** `SME` for rows of the small molecule evidence table
-** `COM` for comment lines
+Each object in **ProXI** API will be heavy represented using controlled vocabulary (CV) terms (https://www.ebi.ac.uk/ols/index). An ontology term will be represent by a cvLabel (name of the Ontology database), accession (accession of the  Term in the Ontology database), name (name of the Term in the Ontology database), value (value of the a parametrized Term).
 
-* *Header lines* +
-Each table based section (protein, peptide, PSM and small molecule) MUST start with the corresponding header line. These header lines MUST only occur once in the document since each section also MUST only occur once.
-* *Dates* +
-Dates and times MUST be supplied in the ISO 8601 format (“YYYY-MM-DD”, “YYYY-MM-DDTHH:MMZ” respectively).
-* *Decimal separator* +
-In mzTab files the dot (“.”) MUST be used as decimal separator. Thousand separators MUST NOT be used in mzTab files.
-* *Comment lines and empty lines* +
-Comment lines can be placed anywhere in an mzTab file. These lines must start with the three-letter code COM and are ignored by most parsers. Empty lines can also occur anywhere in an mzTab file and are ignored.
-* *Params* +
-mzTab makes use of CV parameters. As mzTab is expected to be used in several experimental environments where parameters might not yet be available for the generated scores etc. all parameters can either report CV parameters or user parameters that only contain a name and a value. +
-Parameters are always reported as `[CV label, accession, name, value]`. Any field that is not available MUST be left empty. +
- +
-....
-[MS, MS:1001477, SpectraST,]
-[,,A user parameter, The value]
-....
+```json
 
-In case, the name of the param contains commas, quotes MUST be added to avoid problems with the parsing: `[label, accession, “first part of the param name, second part of the name”, value]`.
-....
-[MOD, MOD:00648, “N,O-diacetylated L-serine”,]
-....
+{
+   cvLabel: "PSI-MS",
+   accession: "MS:1000449",
+   name: "LTQ Orbitrap"
+}
 
-* *Sample IDs* +
-To be able to supply metadata specific to each sample, ids in the format `sample[1-n]` are used. +
- +
-....
-MTD sample[1]-species[1] [NEWT, 9606, Homo sapiens (Human), ]
-....
-* *Assay IDs* +
-To be able to supply metadata specific to each assay, ids in the format `assay[1-n]` are used. +
- +
-....
-MTD assay[1] first assay description
-....
-* *Study variable IDs* +
-To be able to supply metadata specific to each study variable (grouping of assays), ids in the format `study_variable[1-n]` are used.
-....
-MTD study_variable[1]-description Group B (spike-in 0.74 fmol/uL)
-....
-[[sections]]
-=== Sections
-
-mzTab-M files MUST have one Metadata (MTD) section and one Small Molecule (SML) Section. In practice, we expect that most files SHOULD also include one Small Molecule Feature (SMF) section, and one Small Molecule Evidence (SME) Section. Files lacking SMF and SME sections can only present summary data about quantified molecules, without any evidence trail for how those values were derived. It will be left to reading software to determine whether additional validation will be requested such that SMF and SME tables MUST be present.
-
-[[metadata-section]]
-=== Metadata Section
-
-The current (_v3_) ProteomeXchange definition for projects has defined the following fields:
-
-```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ProteomeXchangeDataset id="PXD008955" formatVersion="1.3.0" xsi:noNamespaceSchemaLocation="proteomeXchange-1.3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <CvList>
-        <Cv fullName="PSI-MS" uri="https://raw.githubusercontent.com/HUPO-PSI/psi-ms-CV/master/psi-ms.obo" id="MS"/>
-        <Cv fullName="PRIDE" uri="https://raw.githubusercontent.com/PRIDE-Utilities/pride-ontology/master/pride_cv.obo" id="PRIDE"/>
-        <Cv fullName="PSI-MOD" uri="https://raw.githubusercontent.com/MICommunity/psidev/master/psi/mod/data/PSI-MOD.obo" id="MOD"/>
-        <Cv fullName="UNIMOD" uri="http://www.unimod.org/obo/unimod.obo" id="UNIMOD"/>
-    </CvList>
-    <DatasetSummary announceDate="2018-04-18" hostingRepository="PRIDE" title="Protein quality control by MARCH6/TRC8">
-        <Description>Forward genetic screens in human cells we find that the proteasome-mediated degradation of the soluble misfolded reporter, mCherry-CL1, involves two ER-resident E3 ligases, MARCH6 and TRC8. To identify a more physiological correlate we used quantitative mass spectrometry and found that TRC8 and MARCH6 depletion altered the turnover of the tail-anchored protein Heme-Oxygenase-1 (HO-1).</Description>
-        <ReviewLevel>
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000414" name="Peer-reviewed dataset"/>
-        </ReviewLevel>
-        <RepositorySupport>
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000417" name="Unsupported dataset by repository"/>
-        </RepositorySupport>
-    </DatasetSummary>
-    <DatasetIdentifierList>
-        <DatasetIdentifier>
-            <cvParam cvRef="MS" accession="MS:1001919" name="ProteomeXchange accession number" value="PXD008955"/>
-        </DatasetIdentifier>
-    </DatasetIdentifierList>
-    <DatasetOriginList>
-        <DatasetOrigin>
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000402" name="Original data"/>
-        </DatasetOrigin>
-    </DatasetOriginList>
-    <SpeciesList>
-        <Species>
-            <cvParam cvRef="MS" accession="MS:1001467" name="taxonomy: NCBI TaxID" value="9606"/>
-        </Species>
-    </SpeciesList>
-    <InstrumentList>
-        <Instrument id="Instrument_1">
-            <cvParam cvRef="MS" accession="MS:1002416" name="Orbitrap Fusion"/>
-        </Instrument>
-    </InstrumentList>
-    <ModificationList>
-         <cvParam cvRef="MOD" accession="MOD:00397" name="iodoacetamide derivatized residue"/>
-    </ModificationList>
-    <ContactList>
-        <Contact id="project_submitter">
-            <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="James Williamson"/>
-            <cvParam cvRef="MS" accession="MS:1000589" name="contact email" value="jcw76@cam.ac.uk"/>
-            <cvParam cvRef="MS" accession="MS:1000590" name="contact affiliation" value="University of Cambridge"/>
-            <cvParam cvRef="MS" accession="MS:1002037" name="dataset submitter"/>
-        </Contact>
-        <Contact id="project_lab_head">
-            <cvParam cvRef="MS" accession="MS:1002332" name="lab head"/>
-            <cvParam cvRef="MS" accession="MS:1000586" name="contact name" value="James Nathan"/>
-            <cvParam cvRef="MS" accession="MS:1000589" name="contact email" value="jan33@cam.ac.uk"/>
-            <cvParam cvRef="MS" accession="MS:1000590" name="contact affiliation" value="Cambridge Institute for Medical Research,  Department of Medicine,  University of Cambridge,  Cambridge,  CB2 0XY,  UK"/>
-        </Contact>
-    </ContactList>
-    <PublicationList>
-        <Publication id="PMID29519897">
-            <cvParam cvRef="MS" accession="MS:1000879" name="PubMed identifier" value="29519897"/>
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000400" name="Reference" value="Stefanovic-Barrett S, Dickson AS, Burr SP, Williamson JC, Lobb IT, van den Boomen DJ, Lehner PJ, Nathan JA. MARCH6 and TRC8 facilitate the quality control of cytosolic and tail-anchored proteins. EMBO Rep. 2018"/>
-        </Publication>
-    </PublicationList>
-    <KeywordList>
-        <cvParam cvRef="MS" accession="MS:1001925" name="submitter keyword" value="Protein quality control, MARCH6, TRC8, Intramembrane proteolysis, ERAD"/>
-        <cvParam cvRef="MS" accession="MS:1001926" name="curator keyword" value="Biological"/>
-    </KeywordList>
-    <FullDatasetLinkList>
-        <FullDatasetLink>
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000411" name="Dataset FTP location" value="ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/04/PXD008955"/>
-        </FullDatasetLink>
-        <FullDatasetLink>
-            <cvParam cvRef="MS" accession="MS:1001930" name="PRIDE project URI" value="http://www.ebi.ac.uk/pride/archive/projects/PXD008955"/>
-        </FullDatasetLink>
-    </FullDatasetLinkList>
-    <DatasetFileList>
-        <DatasetFile id="FILE_0" name="JN-SSB_Knockouts_TMT10_20pc_F1.raw">
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000404" name="Associated raw file URI" value="ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/04/PXD008955/JN-SSB_Knockouts_TMT10_20pc_F1.raw"/>
-        </DatasetFile>
-        <DatasetFile id="FILE_1" name="JN-SSB_Knockouts_TMT10_20pc_F10.raw">
-            <cvParam cvRef="PRIDE" accession="PRIDE:0000404" name="Associated raw file URI" value="ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/04/PXD008955/JN-SSB_Knockouts_TMT10_20pc_F10.raw"/>
-        </DatasetFile>
-    </DatasetFileList>
-    <RepositoryRecordList>
-        <RepositoryRecord name="Protein quality control by MARCH6/TRC8" label="PRIDE project" recordID="PXD008955" repositoryID="PRIDE" uri="http://www.ebi.ac.uk/pride/archive/projects/PXD008955"/>
-    </RepositoryRecordList>
-</ProteomeXchangeDataset>
 ```
 
-The PROXI dataset (_v1_) is defined by the following properties:
+The **cvLabel** and **name** MUST be provided, the **cvLabel** is RECOMMENDED and **value** is OPTIONAL.
 
- | Field          | Description                            | Type         | Multiplicity   |
- |----------------|----------------------------------------|--------------|----------------|
- | accession      | The accession of the dataset.          | string       | 1              |
- | title          | Dataset Title                          | string       | 1              |
- | summary        | Dataset description                    | string       | 1              |
- | organisms      | List of organisms                      | OntologyTerm | 1..*           |
- | instruments    | List of instruments                    | OntologyTerm | 1..*           |
- | modifications  | List of Postranslational modifications | OntologyTerm | 1..*           |
- | contacts       | List of contacts                       | Contact      | 1..*           |
 
- The attributes _organisms_ , _instruments_, _modifications_ are Ontology based terms, to read more about that
- check the [_OntologyTerm_ definition](). _Contacts_ are build using the following structure:
+=== Retrieving Dataset Information
 
-  | Field          | Description                            | Type         | Multiplicity   |
-  |----------------|----------------------------------------|--------------|----------------|
-  | contactType    | Contact type (Submitter, LabHead)      | string       | 1              |
-  | attributes     | List of attributes of the contact      | OntologyTerm | 1..*           |
+
+==== Dataset Object schema
+
+A ProteomeXchange dataset contains the minimum metadata to describe a Proteomics experiments (http://www.proteomexchange.org/docs/guidelines_px.pdf). The ProXI dataset endpoint will retrive all the datasets from ProteomeXchange members including datasets after ProteomeXchange creation (PXD0000001) or internal datasets (MSVnnn - MassIVE or PRD000001 - PRIDE or PAe00002 - PeptideAtlas).
+
+The	philosophy behind the design of **Dataset** schema is to keep it as flexible as possible with an overall structure based on the heavy use of controlled vocabulary (CV) terms <<ontology-cv-term>>.
+
+This is the list of elements in the schema:
+
+- _Dataset_: This is the root element with mandatory attributes.
+
+- _accession_ (**required**): The unique accession of the dataset in the resource (e.g. PXD008339).
+
+- _title_ (**required**): The title of the dataset (e.g. Characterisation of proteome of a novel Escherichia coli strain exhibiting mucoviscous phenotype.)
+
+- _summary_: Description of the dataset (e.g. Protein expression by E. coli 26561 during the late-exponential phase of cultures under anaerobic conditions was examined. E. coli 26561 is a multidrug resistant (MDR) and shows an unusual hyper-mucoviscous phenotype. Resistance includes ESBL (CTX-M-14) and proteome was determined with and without exposure to sub-MIC concentrations of the 3rd generation cephalosporin ceftazidime.)
+
+- _species_ (**required**): Contains information about the species included in the dataset as Ontology Terms.
+
+```json
+[
+  {
+    cvLabel:"MS",
+    accession:"MS:1001469",
+    name:"taxonomy: scientific name",
+    value:"Escherichia coli"
+  },
+  {
+    cvLabel:"MS",
+    accession:"MS:1001467",
+    name:"taxonomy: NCBI TaxID",
+    value:"562"
+  }
+]
+```
+
+- _instruments_ (**required**): Element holding the overall information about the instrumentation used in the generation of the data as Ontology Terms.
+
+```json
+[
+  {
+    cvLabel:"MS",
+    accession:"MS:1002732",
+    name:"Orbitrap Fusion Lumos"
+  }
+]
+```
+**Note**: The previous example contains an Ontology Term whihout **value**. Please check the <<ontology-cv-term>> for a full description of Ontology Terms Objects.
+
+- _contacts_ (**required**): Information about	the	researchers	involved in	the	generation	and	submission	of the dataset. Each Contact will be a list of Ontology terms including name of the contact, email, affiliation or role (lab head).
+
+```json
+[
+ {
+   [
+    {
+      cvLabel: "MS",
+      accession: "MS:1000586",
+      name: "contact name",
+      value: "Yasset Perez-Riverol"
+    },
+    {
+      cvLabel: "MS",
+      accession: "MS:1000589",
+      name: "contact email",
+      value: "yperez@ebi.ac.uk"
+    },
+    {
+      cvLabel: "MS",
+      accession:"MS:1002037"
+      name:"dataset submitter"
+     }
+   ]
+ },
+ {
+ [
+     {
+       cvLabel: "MS",
+       accession: "MS:1000586",
+       name: "contact name",
+       value: "Eric Deutch"
+     },
+     {
+       cvLabel: "MS",
+       accession: "MS:1000589",
+       name: "contact email",
+       value: "edeutch@systembiology.org"
+     },
+     {
+       cvLabel: "MS",
+       accession:"MS:1002037"
+       name:"Head Lab"
+      }
+    ]
+ }
+]
+```
+
+- _publications_ (**required**): The list of publications that the dataset has	generated.
+
+```json
+[
+ {
+  [
+   {
+    cvLabel: "MS",
+    accession: "MS:1000879",
+    name: "PubMed identifier",
+    value: "29315472"
+   },
+   {
+     cvLabel: "PRIDE",
+     accession: "PRIDE:0000400",
+     name: "Reference",
+     value: "Mokart D, Saillard C, Zemmour C, Bisbal M, Sannini A, Chow-Chine L, Brun JP, Faucher M, Boher JM, Toiron Y, Chabannon C, Borg JP, Gonçalves A, Camoin L. Early prognostic factors in septic shock cancer patients: a prospective study with a proteomic approach. Acta Anaesthesiol Scand. 2018 62(4):493-503"
+   }
+  ]
+ }
+]
+
+
+```
+- _modifications_: All protein modifications (natural and artificial) are listed in this record (specified as Ontology terms).
+
+```json
+[
+  {
+   cvLabel:"MOD",
+   accession:"MOD:00696",
+   name:"phosphorylated residue"
+  }
+]
+```
+
+**Note**: If a dataset does not contain any modifications,	it is also explicitly announced here with a	specific CV term.
+
+
+- _keywords_: One or more CV terms that define a list of keywords that may be attributed to the dataset.
+
+```json
+[
+  {
+   cvLabel:"MS",
+   accession:"MS:1001925",
+   name:"submitter keyword",
+   value: "Escherichia coli, mucoviscous, anaerobic, antibiotic, MIC, ceftazidime, TMT, shotgun, quantification"
+  },
+  {
+   cvLabel:"MS",
+   accession:"MS:1001926",
+   name="curator keyword",
+   value:"Biological"
+  }
+]
+
+```
+
+- _datasetLink_: List of links	that will allow access to the data. Different links may be used for different ways of accessing the data (for example FTP download or repository web link) or for different repositories hosting the same data.
+
+```json
+[
+       {
+         cvLabel:"PRIDE",
+         accession:"PRIDE:0000411",
+         name: "Dataset FTP location",
+         value: "ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/08/PXD008339"
+        }
+        {
+         cvLabel:"MS",
+         accession:"MS:1001930",
+         name:"PRIDE project URI",
+         value:"http://www.ebi.ac.uk/pride/archive/projects/PXD008339"
+        }
+]
+```
+
+- _dataFiles_: Optional element to provide individual links to all the submitted files (mass spectrometer output files,	search engine	output	files, etc) belonging to the dataset.
+
+```json
+[
+  {
+   cvLabel:"PRIDE",
+   accession:"PRIDE:0000404",
+   name:"Associated raw file URI",
+   value:"ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/08/PXD008339/2781_Phos_1.raw"
+  },
+  {
+   cvLabel:"PRIDE",
+   accession:"PRIDE:0000404",
+   name:"Associated raw file URI",
+   value:"ftp://ftp.pride.ebi.ac.uk/pride/data/archive/2018/08/PXD008339/2781_Phos_2.raw"
+  }
+]
+
+```
+
+
+==== Dataset API entry point
+
+Retrieving datasets will be performed using the **datasets** entry point:
+
+```
+http://www.ebi.ac.uk/pride/archive/proxy/v1/datasets
+
+```
+
+This entry point will retrieve a collection of datasets from the specific resources. Each collection in ProXI can be filter to refine the collection objects using the datasets properties (see <<filtering-collections>>).
+
+
