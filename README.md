@@ -35,6 +35,25 @@ of exchanging proteomics information between ProteomeXchange data partners and c
 - Search Datasets Mod (modification=iTRAQ): http://ccms-internal.ucsd.edu/ProteoSAFe/proxi/datasets?resultType=compact&modification=iTRAQ
 
 
+## jPOST Repository
+
+- List and search Datasets
+  - https://repository.jpostdb.org/proxi/datasets
+  - https://repository.jpostdb.org/proxi/datasets?resultType=full&pageSize=5
+  - https://repository.jpostdb.org/proxi/datasets?contact=Ishihama
+  - https://repository.jpostdb.org/proxi/datasets?species=rat
+  - https://repository.jpostdb.org/proxi/datasets?species=rat,mus
+  - https://repository.jpostdb.org/proxi/datasets?modification=iTRAQ
+  - https://repository.jpostdb.org/proxi/datasets?instrument=Fusion
+  - https://repository.jpostdb.org/proxi/datasets?publication=cancer
+  - https://repository.jpostdb.org/proxi/datasets?accession=PXD005159
+  - https://repository.jpostdb.org/proxi/datasets?accession=JPST000200
+  - https://repository.jpostdb.org/proxi/datasets?search=colorectal
+
+- Get Dataset
+  - https://repository.jpostdb.org/proxi/datasets/JPST000200
+  - https://repository.jpostdb.org/proxi/datasets/PXD005159
+
 ## Contributing
 
 The ProXI API is an open source project, feel free to contribute following the [guidelines](CONTRIBUTING.rst)
