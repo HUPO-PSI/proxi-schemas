@@ -31,7 +31,7 @@ paths:
       tags:
         - datasets
       produces:
-          - "application/json"
+        - "application/json"
       parameters:
         - name: pageSize
           in: query
@@ -112,7 +112,7 @@ paths:
       tags:
         - datasets
       produces:
-          - "application/json"
+        - "application/json"
       parameters:
         - name: accession
           in: path
@@ -135,128 +135,128 @@ paths:
           schema:
             $ref: '#/definitions/Error'
   /spectra/{usi}:
-      get:
-        summary: Get the specific spectrum in the repository
-        operationId: spectraIdGet
-        description: This endpoint returns one spectrum by the unified spectrum identifier
-        tags:
-          - proxi
-        produces:
-          - "application/json"
-        parameters:
-          - name: usi
-            in: path
-            required: true
-            type: string
-            description: A unique unified spectrum identifer
-        responses:
-          "200":
-            description: A spectrum
-            schema:
-              $ref: "#/definitions/Spectrum"
-          '400':
-            description: Bad request. The requested parameters are not supported.
-          '401':
-            description: Authorization information is missing or invalid.
-          '404':
-            description: No data found for the specified parameters.
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
+    get:
+      summary: Get the specific spectrum in the repository
+      operationId: spectraIdGet
+      description: This endpoint returns one spectrum by the unified spectrum identifier
+      tags:
+        - proxi
+      produces:
+        - "application/json"
+      parameters:
+        - name: usi
+          in: path
+          required: true
+          type: string
+          description: A unique unified spectrum identifer
+      responses:
+        "200":
+          description: A spectrum
+          schema:
+            $ref: "#/definitions/Spectrum"
+        '400':
+          description: Bad request. The requested parameters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified parameters.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   OntologyTerm:
     required:
-       - accession
-       - name
+      - accession
+      - name
     properties:
-       accession:
-         type: string
-       name:
-         type: string
-       value:
-         type: string
+      accession:
+        type: string
+      name:
+        type: string
+      value:
+        type: string
   OntologyTermList:
     required:
-       - terms
+      - terms
     properties:
-       terms:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTerm"
+      terms:
+        type: array
+        items:
+          $ref: "#/definitions/OntologyTerm"
   Dataset:
     required:
-       - accession
-       - title
-       - species
-       - instruments
-       - contacts
-       - publications
+      - accession
+      - title
+      - species
+      - instruments
+      - contacts
+      - publications
     properties:
-       accession:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTerm"
-       title:
-         type: string
-       summary:
-         type: string
-       species:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTermList"
-       instruments:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTerm"
-       modifications:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTerm"
-       contacts:
-         type: array
-         items:
-           $ref: "#/definitions/OntologyTermList"
-       publications:
-         type: "array"
-         items:
-           $ref: "#/definitions/OntologyTermList"
-       keywords:
-         type: "array"
-         items:
-           $ref: "#/definitions/OntologyTerm"
-       datasetLink:
-         type: "array"
-         items:
-           $ref: "#/definitions/OntologyTerm"
-       dataFiles:
-         type: "array"
-         items:
-           $ref: "#/definitions/OntologyTerm"
+      accession:
+        type: array
+        items:
+          $ref: "#/definitions/OntologyTerm"
+      title:
+        type: string
+      summary:
+        type: string
+      species:
+        type: array
+        items:
+          $ref: "#/definitions/OntologyTermList"
+      instruments:
+        type: array
+        items:
+          $ref: "#/definitions/OntologyTerm"
+      modifications:
+        type: array
+        items:
+          $ref: "#/definitions/OntologyTerm"
+      contacts:
+        type: array
+        items:
+          $ref: "#/definitions/OntologyTermList"
+      publications:
+        type: "array"
+        items:
+          $ref: "#/definitions/OntologyTermList"
+      keywords:
+        type: "array"
+        items:
+          $ref: "#/definitions/OntologyTerm"
+      datasetLink:
+        type: "array"
+        items:
+          $ref: "#/definitions/OntologyTerm"
+      dataFiles:
+        type: "array"
+        items:
+          $ref: "#/definitions/OntologyTerm"
 
   Spectrum:
-      required:
-         - usi
-         - peakList
-      properties:
-         usi:
-           type: string
-         lsi:
-           type: string
-         peakList:
-           type: array
-           items:
-             $ref: "#/definitions/PeakList"
-         precursorCharge:
-           type: integer
-         precursorMz:
-           type: double
-         spectrumAdditionals:
-           type: "array"
-             items:
-               $ref: "#/definitions/OntologyTerm"
-
+    required:
+      - usi
+      - peakList
+    properties:
+      usi:
+        type: string
+      lsi:
+        type: string
+      peakList:
+        type: array
+        items:
+          $ref: "#/definitions/PeakList"
+      precursorCharge:
+        type: integer
+      precursorMz:
+        type: number
+        format: float
+      spectrumAdditionals:
+        type: "array"
+        items:
+          $ref: "#/definitions/OntologyTerm"
   Error:
     required:
       - code
@@ -267,13 +267,14 @@ definitions:
         format: int32
       message:
         type: string
-
   PeakList:
-     required:
-       - mz
-       - intensity
-     properties:
-       mz:
-        type: double
-       intensity:
-        type: double
+    required:
+      - mz
+      - intensity
+    properties:
+      mz:
+        type: number
+        format: float
+      intensity:
+        type: number
+        format: float
