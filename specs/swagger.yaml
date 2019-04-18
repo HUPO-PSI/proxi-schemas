@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: Proteomics Expression Interface
   description: "[Proteomics eXpression Interface](https://github.com/HUPO-PSI/proxi-schemas/)"
-  version: 1.0.0
+  version: 0.1.0
   contact:
     name: Yasset Perez-Riverol
     email: yperez@ebi.ac.uk
@@ -13,7 +13,7 @@ schemes:
   - http
   - https
 host: www.proteomexchange.org
-basePath: /proxi/v1
+basePath: /proxi/v0.1
 
 tags:
   - name: proxi
