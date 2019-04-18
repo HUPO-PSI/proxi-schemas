@@ -238,22 +238,25 @@ definitions:
   Spectrum:
     required:
       - usi
-      - peakList
+      - np
+      - ms
+      - is
     properties:
       usi:
         type: string
       lsi:
         type: string
-      peakList:
-        type: array
-        items:
-          $ref: "#/definitions/PeakList"
-      precursorCharge:
+      np:
         type: integer
-      precursorMz:
-        type: number
-        format: float
-      spectrumAdditionals:
+        format: int32
+        description: Total number of peaks
+      ms:
+        type: array
+        description: Mass values of the corresponding Spectrum
+      is:
+        type: array
+        description: Intesity values of the corresponding Spectrum
+      additionals:
         type: "array"
         items:
           $ref: "#/definitions/OntologyTerm"
