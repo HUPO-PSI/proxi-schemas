@@ -263,6 +263,43 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/OntologyTerm"
+  ExtendedSpectrum:
+    required:
+      - numberOfPeaks
+      - mzs
+      - intensities
+      - attributes
+    properties:
+      usi:
+        type: string
+        description: Universal Spectrum Identifier
+      id:
+        type: string
+        description: Local identifier specific to the provider
+      numberOfPeaks:
+        type: integer
+        format: int32
+        description: Total number of peaks or elements in the data arrays
+      mzs:
+        type: array
+        items:
+          type: number
+        description: Array of m/z values
+      intensities:
+        type: array
+        items:
+          type: number
+        description: Array of intensity values corresponding to mzs
+      interpretations:
+        type: array
+        items:
+          type: string
+        description: Array of coded interpretation strings of the peaks, corresponding to mzs
+      attributes:
+        type: array
+        description: List of ontology terms providing attributes of the spectrum
+        items:
+          $ref: "#/definitions/OntologyTerm"
   Error:
     required:
       - code
