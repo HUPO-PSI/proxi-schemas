@@ -234,12 +234,11 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/OntologyTerm"
-
   Spectrum:
     required:
       - usi
       - np
-      - ms
+      - mz
       - is
     properties:
       usi:
@@ -250,14 +249,18 @@ definitions:
         type: integer
         format: int32
         description: Total number of peaks
-      ms:
+      mz:
         type: array
-        description: Mass values of the corresponding Spectrum
+        items:
+          type: number
+        description: m/z values of the corresponding Spectrum
       is:
         type: array
-        description: Intesity values of the corresponding Spectrum
+        items:
+          type: number
+        description: Intensity values of the corresponding Spectrum
       additionals:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/OntologyTerm"
   Error:
