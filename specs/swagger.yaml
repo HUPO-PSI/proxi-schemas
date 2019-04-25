@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: Proteomics Expression Interface
   description: "[Proteomics eXpression Interface](https://github.com/HUPO-PSI/proxi-schemas/)"
-  version: 1.0.0
+  version: 0.1.0
   contact:
     name: Yasset Perez-Riverol
     email: yperez@ebi.ac.uk
@@ -13,7 +13,7 @@ schemes:
   - http
   - https
 host: www.proteomexchange.org
-basePath: /proxi/v1
+basePath: /proxi/v0.1
 
 tags:
   - name: proxi
@@ -238,22 +238,25 @@ definitions:
   Spectrum:
     required:
       - usi
-      - peakList
+      - np
+      - ms
+      - is
     properties:
       usi:
         type: string
       lsi:
         type: string
-      peakList:
-        type: array
-        items:
-          $ref: "#/definitions/PeakList"
-      precursorCharge:
+      np:
         type: integer
-      precursorMz:
-        type: number
-        format: float
-      spectrumAdditionals:
+        format: int32
+        description: Total number of peaks
+      ms:
+        type: array
+        description: Mass values of the corresponding Spectrum
+      is:
+        type: array
+        description: Intesity values of the corresponding Spectrum
+      additionals:
         type: "array"
         items:
           $ref: "#/definitions/OntologyTerm"
