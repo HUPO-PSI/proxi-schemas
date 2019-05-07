@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: Proteomics Expression Interface
   description: "[Proteomics eXpression Interface](https://github.com/HUPO-PSI/proxi-schemas/)"
-  version: 0.1.0
+  version: 0.1.1
   contact:
     name: Yasset Perez-Riverol
     email: yperez@ebi.ac.uk
@@ -148,10 +148,10 @@ paths:
           in: path
           required: true
           type: string
-          description: A unique unified spectrum identifer
+          description: Universal Spectrum Identifier (USI)
       responses:
         "200":
-          description: A spectrum
+          description: Spectrum and metadata of the requested Universal Spectrum Identifier
           schema:
             $ref: "#/definitions/Spectrum"
         '400':
@@ -236,36 +236,6 @@ definitions:
           $ref: "#/definitions/OntologyTerm"
   Spectrum:
     required:
-      - usi
-      - np
-      - mz
-      - is
-    properties:
-      usi:
-        type: string
-      lsi:
-        type: string
-      np:
-        type: integer
-        format: int32
-        description: Total number of peaks
-      mz:
-        type: array
-        items:
-          type: number
-        description: m/z values of the corresponding Spectrum
-      is:
-        type: array
-        items:
-          type: number
-        description: Intensity values of the corresponding Spectrum
-      additionals:
-        type: array
-        items:
-          $ref: "#/definitions/OntologyTerm"
-  ExtendedSpectrum:
-    required:
-      - numberOfPeaks
       - mzs
       - intensities
       - attributes
@@ -276,10 +246,6 @@ definitions:
       id:
         type: string
         description: Local identifier specific to the provider
-      numberOfPeaks:
-        type: integer
-        format: int32
-        description: Total number of peaks or elements in the data arrays
       mzs:
         type: array
         items:
@@ -310,14 +276,3 @@ definitions:
         format: int32
       message:
         type: string
-  PeakList:
-    required:
-      - mz
-      - intensity
-    properties:
-      mz:
-        type: number
-        format: float
-      intensity:
-        type: number
-        format: float
