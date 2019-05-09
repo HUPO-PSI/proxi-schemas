@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: Proteomics Expression Interface
   description: "[Proteomics eXpression Interface](https://github.com/HUPO-PSI/proxi-schemas/)"
-  version: 0.1.0
+  version: 0.1.1
   contact:
     name: Yasset Perez-Riverol
     email: yperez@ebi.ac.uk
@@ -148,10 +148,10 @@ paths:
           in: path
           required: true
           type: string
-          description: A unique unified spectrum identifer
+          description: Universal Spectrum Identifier (USI)
       responses:
         "200":
-          description: A spectrum
+          description: Spectrum and metadata of the requested Universal Spectrum Identifier
           schema:
             $ref: "#/definitions/Spectrum"
         '400':
@@ -236,31 +236,34 @@ definitions:
           $ref: "#/definitions/OntologyTerm"
   Spectrum:
     required:
-      - usi
-      - np
-      - mz
-      - is
+      - mzs
+      - intensities
+      - attributes
     properties:
       usi:
         type: string
-      lsi:
+        description: Universal Spectrum Identifier
+      id:
         type: string
-      np:
-        type: integer
-        format: int32
-        description: Total number of peaks
-      mz:
+        description: Local identifier specific to the provider
+      mzs:
         type: array
         items:
           type: number
-        description: m/z values of the corresponding Spectrum
-      is:
+        description: Array of m/z values
+      intensities:
         type: array
         items:
           type: number
-        description: Intensity values of the corresponding Spectrum
-      additionals:
+        description: Array of intensity values corresponding to mzs
+      interpretations:
         type: array
+        items:
+          type: string
+        description: Array of coded interpretation strings of the peaks, corresponding to mzs
+      attributes:
+        type: array
+        description: List of ontology terms providing attributes of the spectrum
         items:
           $ref: "#/definitions/OntologyTerm"
   Error:
@@ -273,14 +276,3 @@ definitions:
         format: int32
       message:
         type: string
-  PeakList:
-    required:
-      - mz
-      - intensity
-    properties:
-      mz:
-        type: number
-        format: float
-      intensity:
-        type: number
-        format: float
