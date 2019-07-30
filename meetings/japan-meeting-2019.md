@@ -11,27 +11,31 @@ Entry points
 --------------------------
 
 Convention:
-~~~~~~~~~~~~~~~
-Compact objects: Using only mandatory field (smaller)
-Full objects: Including all fields.
+
+
+- Compact objects: Using only mandatory field (smaller)
+- Full objects: Including all fields.
 
 Not all entry points will be able to be implemented by everyone.
 Entry points that are not implemented, need to be documented properly. Find the right way to do it.
 
 Implementation in ProteomeCentral:
-Union of the results of all resources.
-We need to know where it is originating resource.
+
+Union of the results of all resources. We need to know where it is originating resource.
+
 
 Datasets
 -------------------------------
 
 /datasets/{id}
 /datasets?<filterTerms>
+
 Every query must return a list, even if of size zero or one
 /datasets?species=homo sapiens&pageSize=50&pageNumber=1&resultType=compact
 
 Filter options: 
-~~~~~~~~~~~~~~~~~~~
+
+```
 accession=[PXD0000001, PXD000002]
 species=
 instrument=
@@ -43,13 +47,14 @@ search=liver (i.e., free text search term)
 protein= ?
 peptide= ? 
 
+```
+
 Multiple values for attribute are query: 
 /datasets?species=human;mouse	# decide which of these to use or what is conventional (Need to be decided)
 /datasets?species=[human,mouse]
 
-
-
-SPECTRA
+spectra
+-------------------------------
 
 /spectra/{usi}
 This returns one actual spectrum
