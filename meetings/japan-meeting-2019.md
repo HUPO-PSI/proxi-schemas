@@ -24,14 +24,18 @@ Implementation in ProteomeCentral:
 Union of the results of all resources. We need to know where it is originating resource.
 
 
-Datasets
+dataset
 -------------------------------
 
+```python
 /datasets/{id}
 /datasets?<filterTerms>
-
+```
 Every query must return a list, even if of size zero or one
+
+```
 /datasets?species=homo sapiens&pageSize=50&pageNumber=1&resultType=compact
+```
 
 Filter options: 
 
@@ -44,31 +48,47 @@ publication=
 modification=
 keyword= (only from the Dataset Keywords field)
 search=liver (i.e., free text search term)
-protein= ?
-peptide= ? 
+proteinAccession = # (Protein will return a dataset where this protein has been identified.) 
+peptideSequence  = # (Peptide will return a dataset where this peptide has been identified.)
 
 ```
 
-Multiple values for attribute are query: 
-/datasets?species=human;mouse	# decide which of these to use or what is conventional (Need to be decided)
+Multiple values for attribute are query like: 
+
+```python
 /datasets?species=[human,mouse]
+```
 
 spectra
 -------------------------------
 
-/spectra/{usi}
-This returns one actual spectrum
-/spectra?<filterTerms>
-Every query must return a list, even if of size zero or one
+The spectrum object will have two mandatory fields that will be provided in the compact version of the object: 
 
-Spectrum should contain a STATUS field mandatory: [READABLE, PEAKS UNAVAILABLE]
+- usi (The unified spectrum identifier)
+- status (An status would define if the current spectrum identifier can be read/provide or is unavailable)
+  [READABLE, PEAKS UNAVAILABLE]
+  
+Entry points for spectra: 
+
+```python
+/spectra?<filterTerms>
+```
+
+The first and most important filter will be a `usi`: 
+
+```python
+/spectra?usi={}
+```
+
+Result is the requested spectrum annotated with the user-supplied peptide string. A resource may return an empty result if unable to generate the result object. 
+
+> In particular, if the resource can find the spectrum but `not annotate the spectrum` with the peptide string then the result should be an error code.
+
+
+> Every query must return a list, even if of size zero or one
 
 What happens with queries that are very large?
 
-/spectra?usi={}
-Result is the requested spectrum annotated with the user-supplied peptide string
-A resource may return an empty result if unable to generate the result object
-In particular, if the resource can find the spectrum but not annotate the spectrum with the peptide string then the result should be an error code.
 Proposal: If unable to resolve an ambiguous USI, a resource may return an error, as well as the set of (“precise”) USIs that result from the query:
 /spectra?accession=PXD000&msRun=XXX&scan=2019&resultType=compact
 
