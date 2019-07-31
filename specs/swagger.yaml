@@ -134,7 +134,7 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /spectra/{usi}:
+  /spectra:
     get:
       summary: Get the specific spectrum in the repository
       operationId: spectraIdGet
@@ -144,11 +144,45 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: usi
-          in: path
+        - name: pageSize
+          in: query
+          description: How many items to return at one time (default 100, max 100)
+          required: false
+          type: integer
+          default: 100
+        - name: pageNumber
+          in: query
+          description: Current page to be shown paged datasets (default page 1)
+          required: false
+          type: integer
+          default: 0
+        - name: resultType
+          in: query
+          description: Type of the object to be retrieve Compact or Full dataset
           required: true
           type: string
+          enum: [compact, full]
+          default: compact
+        - name: usi
+          in: query
+          type: string
           description: Universal Spectrum Identifier (USI)
+        - name: accession
+          in: query 
+          type: string 
+          description: Dataset accession 
+        - name: msrun 
+          in: query
+          type: string 
+          description: MsRun containing the spetra 
+        - name: filename 
+          in: query
+          type: string 
+          description: FileName containing the spectra
+        - name: scan
+          in: query 
+          type: string 
+          description: Scan to be search
       responses:
         "200":
           description: Spectrum and metadata of the requested Universal Spectrum Identifier
@@ -236,9 +270,8 @@ definitions:
           $ref: "#/definitions/OntologyTerm"
   Spectrum:
     required:
-      - mzs
-      - intensities
-      - attributes
+      - usi
+      - status
     properties:
       usi:
         type: string
@@ -246,6 +279,10 @@ definitions:
       id:
         type: string
         description: Local identifier specific to the provider
+      status:
+        type: string 
+        enum: [READABLE, PEAK UNAVAILABLE]
+        description: Status of the Spectrum
       mzs:
         type: array
         items:
