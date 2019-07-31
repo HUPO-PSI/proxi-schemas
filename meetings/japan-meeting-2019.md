@@ -27,7 +27,7 @@ Union of the results of all resources. We need to know where it is originating r
 dataset
 -------------------------------
 
-```python
+```
 /datasets/{id}
 /datasets?<filterTerms>
 ```
@@ -55,7 +55,7 @@ peptideSequence  = # (Peptide will return a dataset where this peptide has been 
 
 Multiple values for attribute are query like: 
 
-```python
+```
 /datasets?species=[human,mouse]
 ```
 
@@ -70,7 +70,7 @@ The spectrum object will have two mandatory fields that will be provided in the 
   
 Entry points for spectra: 
 
-```python
+```
 /spectra?<filterTerms>
 ```
 
@@ -87,14 +87,22 @@ Result is the requested spectrum annotated with the user-supplied peptide string
 
 > Every query must return a list, even if of size zero or one
 
-What happens with queries that are very large?
+
+***Question Mark: What happens with queries that are very large?***
 
 Proposal: If unable to resolve an ambiguous USI, a resource may return an error, as well as the set of (“precise”) USIs that result from the query:
-/spectra?accession=PXD000&msRun=XXX&scan=2019&resultType=compact
 
+```
+/spectra?accession=PXD000&msRun=XXX&scan=2019&resultType=compact
+````
+
+Posible independent filters: 
+
+```
 PX accession 
 msRun or fileName
 Scan 
+```
 
 The only way the USI is a query is for msRun.
 
@@ -104,16 +112,29 @@ Differentiate “I could not open” (raw files) from “empty”.
 
 
 PSMs
+--------
 
 Actual observations in the resource, not interpretations/hypotheses.
 
+```
+/psms?<filterTerms>
+```
+
+The first and more important query is fine a PSM by using the usi of the spectra including the Peptide Sequence and charge. 
+
+```
 /psms?usi={} 
-Shortcut
+```
 
+You can query the psms by using also independent properties such as peptideSequence or charge state: 
+
+```
 /psms?peptideSequence=VLHPLEGAVVIIFK&charge=2
-Do we want:
-/spectra?peptideSequence=VLHPLEGAVVIIFK&charge=2
+```
 
+Filters available for each PSM: 
+
+```
 passThreshold=true (“true” is the default value, can also be set to passThreshold=all)
 PX accession 
 MsRun 
@@ -124,9 +145,11 @@ Charge
 Modification (use instead of PTM)
 Will also need to specify massTolerance= +/- delta_mass_tolerance
 peptidoForm
+```
 
-One PSM Object: 
+The PSMS Object will look like:  
 
+```
 peptideSequence 
 USI (https://docs.google.com/document/d/1LLQwmttrXku2JBgWZvheXDKVbCb1AcGPVXd8FSSby00/edit#)
 Modifications as represented by mzTab (Yasset)
@@ -139,15 +162,23 @@ charge
 proteinAccessions: [
    [ProteinId, Start, End}
 ]
+```
 
-We have decided to enable queries by actual peptide sequence only. The only way to retrieve peptidoforms is by using mass tolerances.
+***Note: We have decided to enable queries by actual peptide sequence only. The only way to retrieve peptidoforms is by using mass tolerances.***
 
 
-PEPTIDE
+peptides
+--------------------------
 
-/peptide?
+The `peptide` entrypoint is a summary of all the PSMs valid (passThreshold) across all the PX datasets. 
+
+```
+/peptide?<filterTerm>
+```
 
 Query filters:
+
+```
 passThreshold=true (“true” is the default value, can also be set to passThreshold=all)
 PX accession
 peptideSequence
@@ -155,9 +186,11 @@ proteinAccession
 Modification (use instead of PTM)
 Will also need to specify massTolerance= +/- delta_mass_tolerance
 peptidoForm
+```
 
 One Peptide Object: 
 
+```
 peptideSequence
 countPSM
 Modifications
@@ -169,12 +202,18 @@ proteinAccessions: [
 ]
 attributes: [     (Yasset Define name of this - the goal is to represent repository-scale aggregate FDR controls)
 ] 
+```
 
- 
+proteins
+---------------------------
 
-PROTEINS
+The `protein` entrypoint is a summary of all protein identifications (proteinevidences) in the resource. 
+
+/proteins?<filterTerm>
 
 Query filters:
+
+```
 passThreshold=true (“true” is the default value, can also be set to passThreshold=all)
 PX accession 
 peptideSequence 
@@ -184,9 +223,11 @@ peptidoForm
 Gene accession
 ProteinAccession=[Acc1, Acc2, Acc3...]
 Isoforms need to be explicitly listed as separate accessions
+```
 
 One Protein Object: 
 
+```
 countPeptides
 countPSMs
 Modifications
@@ -195,7 +236,7 @@ countPeptidoforms
 attributes: [     (Yasset Define name of this - the goal is to represent repository-scale aggregate FDR controls)
 ] 
 
-
+````
 
 
 
