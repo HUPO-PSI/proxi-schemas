@@ -16,7 +16,7 @@ host: www.proteomexchange.org
 basePath: /proxi/v0.1
 
 tags:
-  - name: proxi
+  - name: datasets
     description: A set of datasets, peptides and protein identified acrosss ProteomeXchange partners
 consumes:
   - application/json
@@ -104,7 +104,6 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-
   /datasets/{accession}:
     get:
       summary: Get an specific dataset
@@ -136,11 +135,11 @@ paths:
             $ref: '#/definitions/Error'
   /spectra:
     get:
-      summary: Get the specific spectrum in the repository
-      operationId: spectraIdGet
-      description: This endpoint returns one spectrum by the unified spectrum identifier
+      summary: Get a collection of spectrum
+      operationId: getSpectra
+      description: This endpoint returns a collection of spectra for a given query including a usi. 
       tags:
-        - proxi
+        - spectra
       produces:
         - "application/json"
       parameters:
@@ -198,8 +197,160 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-
+  /psms:
+     get:
+      summary: Get a collection of peptide spectrum matches  
+      operationId: getPSMs
+      description: Get specific Peptide Spectrum Match (PSM) if is present in the database and has been identified by a previous experiment in the resource. 
+      tags:
+        - spectra
+      produces:
+        - "application/json"
+      parameters:
+        - name: pageSize
+          in: query
+          description: How many items to return at one time (default 100, max 100)
+          required: false
+          type: integer
+          default: 100
+        - name: pageNumber
+          in: query
+          description: Current page to be shown paged datasets (default page 1)
+          required: false
+          type: integer
+          default: 0
+        - name: resultType
+          in: query
+          description: Type of the object to be retrieve Compact or Full dataset
+          required: true
+          type: string
+          enum: [compact, full]
+          default: compact
+        - name: usi
+          in: query
+          type: string
+          description: Universal Spectrum Identifier (USI)
+        - name: accession
+          in: query 
+          type: string 
+          description: Dataset accession 
+        - name: msrun 
+          in: query
+          type: string 
+          description: MsRun containing the spetra 
+        - name: filename 
+          in: query
+          type: string 
+          description: FileName containing the spectra
+        - name: scan
+          in: query 
+          type: string 
+          description: Scan to be search
+        - name: passThreshold
+          in: query
+          type: boolean 
+          description: the PSM pass the thorsholds of the repository (e.g. FDR thresholds)
+        - name: peptideSequence
+          in: query
+          type: string 
+          description: peptideSequence allows to retrieve all the PSMs for an specific Peptide Sequence including modified and un-modified previous. 
+        - name: proteinAccession 
+          in: query 
+          type: string
+          description: Protein Acession for the identified peptide
+        - name: charge
+          in: query
+          type: integer
+          description: charge state for the PSM
+        - name: modification
+          in: query
+          type: string 
+          description: modification that found in the peptide. For example, to query all peptides that are oxidated. 
+        - name: peptidoForm   
+          in: query 
+          type: string
+          description: Peptidform specific including PTM localizations, it will only retrieve the specific PSMs.
+      responses:
+        "200":
+          description: Peptide Spectrum match 
+          schema:
+            $ref: "#/definitions/Psm"
+        '400':
+          description: Bad request. The requested parameters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified parameters.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /peptides:
+     get:
+      summary: Get a collection of peptides   
+      operationId: getPeptides
+      description: The peptide entrey point returns a global Peptidoform statistics across an entire resource. Each peptide contains a summary of the statistics of the peptidoform across the entire resource.  
+      tags:
+        - molecules
+      produces:
+        - "application/json"
+      parameters:
+        - name: pageSize
+          in: query
+          description: How many items to return at one time (default 100, max 100)
+          required: false
+          type: integer
+          default: 100
+        - name: pageNumber
+          in: query
+          description: Current page to be shown paged datasets (default page 1)
+          required: false
+          type: integer
+          default: 0
+        - name: resultType
+          in: query
+          description: Type of the object to be retrieve Compact or Full dataset
+          required: true
+          type: string
+          enum: [compact, full]
+          default: compact
+        - name: passThreshold
+          in: query
+          type: boolean 
+          description: the PSM pass the thorsholds of the repository (e.g. FDR thresholds)
+        - name: peptideSequence
+          in: query
+          type: string 
+          description: peptideSequence allows to retrieve all the PSMs for an specific Peptide Sequence including modified and un-modified previous. 
+        - name: proteinAccession 
+          in: query 
+          type: string
+          description: Protein Acession for the identified peptide
+        - name: modification
+          in: query
+          type: string 
+          description: modification that found in the peptide. For example, to query all peptides that are oxidated. 
+        - name: peptidoForm   
+          in: query 
+          type: string
+          description: Peptidform specific including PTM localizations, it will only retrieve the specific PSMs.
+      responses:
+        "200":
+          description: Peptide
+          schema:
+            $ref: "#/definitions/Peptide"
+        '400':
+          description: Bad request. The requested parameters are not supported.
+        '401':
+          description: Authorization information is missing or invalid.
+        '404':
+          description: No data found for the specified parameters.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
+  
   OntologyTerm:
     required:
       - accession
@@ -211,6 +362,7 @@ definitions:
         type: string
       value:
         type: string
+  
   OntologyTermList:
     required:
       - terms
@@ -219,6 +371,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/OntologyTerm"
+  
   Dataset:
     required:
       - accession
@@ -268,6 +421,7 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/OntologyTerm"
+  
   Spectrum:
     required:
       - usi
@@ -276,7 +430,7 @@ definitions:
       usi:
         type: string
         description: Universal Spectrum Identifier
-      id:
+      accession:
         type: string
         description: Local identifier specific to the provider
       status:
@@ -303,6 +457,92 @@ definitions:
         description: List of ontology terms providing attributes of the spectrum
         items:
           $ref: "#/definitions/OntologyTerm"
+  
+  Modification: 
+    required: 
+      - accession
+    properties:
+      accession: 
+         type: string 
+         description: accession of the PTM (e.g UNIMOD-35, or CHEMOD:+35.00)
+      position: 
+         type: integer
+         description: position in the aminoacid sequence
+      scores: 
+         type: array 
+         items: 
+           $ref: "#/definitions/OntologyTerm" 
+  
+  ProteinIdentification: 
+    required: 
+      - proteinAccession
+      - startPosition
+      - endPosition 
+    properties:
+      proteinAccession: 
+        type: string 
+        description: Protein accession identified
+      startPosition: 
+        type: integer 
+        description: Start position
+      endPosition: 
+        type: integer 
+        description: End position 
+  
+  Psm:
+    required:
+      - accession
+      - peptideSequence
+    properties: 
+      accession:
+         type: string 
+         description: Accession of the PSM
+      usi:
+         type: string 
+         description: The USI representation for the PSM
+      peptideSequence: 
+         type: string 
+         description: Peptide sequence 
+      ptms:
+        type: array
+        items:
+          $ref: "#/definitions/Modification" 
+      searchEngineScore: 
+        type: array
+        items: 
+          $ref: "#/definitions/OntologyTerm"
+      retentionTime: 
+        type: number
+        description: precursor retention time
+      charge: 
+        type: integer 
+        description: precursor charge 
+      proteinAccessions: 
+        type: array 
+        items: 
+         $ref: "#/definitions/ProteinIdentification"
+        
+  Peptide: 
+    required:
+      - peptidoForm 
+    properties:
+      peptidoForm: 
+        type: string 
+        description: Peptidoform as String 
+      peptideSequence: 
+        type: string 
+        description: Peptide Sequence 
+      countPSM: 
+        type: integer
+        description: Number of PSMs that support the current Peptidoform 
+      countDatasets: 
+        type: string 
+        description: Number of datasets that support the current PeptidoForm 
+      ptms:
+        type: array
+        items:
+          $ref: "#/definitions/Modification"
+      
   Error:
     required:
       - code
