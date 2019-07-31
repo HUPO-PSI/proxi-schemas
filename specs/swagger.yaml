@@ -135,7 +135,7 @@ paths:
             $ref: '#/definitions/Error'
   /spectra:
     get:
-      summary: Get a collection of spectrum
+      summary: Get a collection of spectra
       operationId: getSpectra
       description: This endpoint returns a collection of spectra for a given query including a usi. 
       tags:
@@ -238,7 +238,7 @@ paths:
           in: query
           type: string 
           description: MsRun containing the spetra 
-        - name: filename 
+        - name: fileName 
           in: query
           type: string 
           description: FileName containing the spectra
