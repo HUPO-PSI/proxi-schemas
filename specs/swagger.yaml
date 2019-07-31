@@ -157,7 +157,7 @@ paths:
           default: 0
         - name: resultType
           in: query
-          description: Type of the object to be retrieve Compact or Full dataset
+          description: Type of the object to be retrieved Compact or Full dataset
           required: true
           type: string
           enum: [compact, full]
@@ -170,18 +170,18 @@ paths:
           in: query 
           type: string 
           description: Dataset accession 
-        - name: msrun 
+        - name: msRun 
           in: query
           type: string 
-          description: MsRun containing the spetra 
-        - name: filename 
+          description: MsRun containing the spectra 
+        - name: fileName 
           in: query
           type: string 
           description: FileName containing the spectra
         - name: scan
           in: query 
           type: string 
-          description: Scan to be search
+          description: Scan to be searched
       responses:
         "200":
           description: Spectrum and metadata of the requested Universal Spectrum Identifier
@@ -201,7 +201,7 @@ paths:
      get:
       summary: Get a collection of peptide spectrum matches  
       operationId: getPSMs
-      description: Get specific Peptide Spectrum Match (PSM) if is present in the database and has been identified by a previous experiment in the resource. 
+      description: Get specific Peptide Spectrum Matches (PSMs) if they are present in the database and have been identified by a previous experiment in the resource. 
       tags:
         - spectra
       produces:
@@ -215,13 +215,13 @@ paths:
           default: 100
         - name: pageNumber
           in: query
-          description: Current page to be shown paged datasets (default page 1)
+          description: Current page to be shown paged psms (default page 1)
           required: false
           type: integer
           default: 0
         - name: resultType
           in: query
-          description: Type of the object to be retrieve Compact or Full dataset
+          description: Type of the object to be retrieved Compact or Full dataset
           required: true
           type: string
           enum: [compact, full]
@@ -265,7 +265,7 @@ paths:
         - name: modification
           in: query
           type: string 
-          description: modification that found in the peptide. For example, to query all peptides that are oxidated. 
+          description: modification found in the peptide. For example, to query all peptides that are oxidated. 
         - name: peptidoForm   
           in: query 
           type: string
@@ -303,7 +303,7 @@ paths:
           default: 100
         - name: pageNumber
           in: query
-          description: Current page to be shown paged datasets (default page 1)
+          description: Current page to be shown paged peptides (default page 1)
           required: false
           type: integer
           default: 0
@@ -333,7 +333,7 @@ paths:
         - name: peptidoForm   
           in: query 
           type: string
-          description: Peptidform specific including PTM localizations, it will only retrieve the specific PSMs.
+          description: Peptidoform specific including PTM localizations, it will only retrieve the specific PSMs.
       responses:
         "200":
           description: Peptide
@@ -491,7 +491,6 @@ definitions:
   
   Psm:
     required:
-      - accession
       - peptideSequence
     properties: 
       accession:
