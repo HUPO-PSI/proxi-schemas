@@ -107,7 +107,7 @@ and are used to define the scope of the format in version 1.0.0-draft.
 
 4. ProXI API should be able to retrieve information about independent experiments as well as aggregation analyses of multiple experiments. For example, ProXI API can be implemented by PeptideAtlas to report `peptide` and `protein` for groups or collections of datasets, but also can be implemented by PRIDE database to provide `peptide` and `protein` evidence at dataset (study) level.
 
-5. It should develop and provide a Query Language (PXQL) to query mass spectrometry data server by different repositories.
+5. It should develop and provide a Query Language (PXQL) to query mass spectrometry data by different repositories.
 
 6. It should be possible to query any ProXI implementation and retrieve which type of information is provided by the resource and which methods are implemented. The API should be self discoverable.
 
