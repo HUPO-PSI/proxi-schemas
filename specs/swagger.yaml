@@ -96,14 +96,17 @@ paths:
               $ref: "#/definitions/Dataset"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /datasets/{accession}:
     get:
       summary: Get an specific dataset
@@ -125,14 +128,17 @@ paths:
             $ref: "#/definitions/Dataset"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /spectra:
     get:
       summary: Get a collection of spectra
@@ -189,10 +195,12 @@ paths:
             $ref: "#/definitions/Spectrum"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -277,10 +285,12 @@ paths:
             $ref: "#/definitions/Psm"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -341,10 +351,12 @@ paths:
             $ref: "#/definitions/Peptide"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -398,10 +410,12 @@ paths:
             $ref: "#/definitions/Protein"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -638,4 +652,6 @@ definitions:
         format: int32
       message:
         type: string
+
+
 
