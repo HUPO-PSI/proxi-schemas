@@ -177,7 +177,7 @@ http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/{accession}             //G
 
 Every API collection point SHOULD provide a parameter called `resultType`. This parameter will define the type of the object the API call will retrieve [Full or Compact].
 
-- A Compact object is a version of the object that only contains the required fields of the Object type. For example, for a peptide spectrum match would be the `peptideSequence` or for an spectrum the `unified spectrum identifier`.
+- A Compact object is a version of the object that only contains the required fields of the Object type. For example, for a peptide spectrum match this would be the `peptideSequence` or for an spectrum the `unified spectrum identifier`.
 
 - A Full object is a version of the object that contains all the attributes/fields of the Object type.
 
