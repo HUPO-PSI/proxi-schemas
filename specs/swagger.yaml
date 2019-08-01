@@ -265,7 +265,7 @@ paths:
         - name: proteinAccession 
           in: query 
           type: string
-          description: Protein Acession for the identified peptide
+          description: Protein Accession for the identified peptide
         - name: charge
           in: query
           type: integer
@@ -299,7 +299,7 @@ paths:
      get:
       summary: Get a collection of peptides   
       operationId: getPeptides
-      description: The peptide entrey point returns a global peptidoform statistics across an entire resource. Each peptide contains a summary of the statistics of the peptidoform across the entire resource.
+      description: The peptide entry point returns global peptidoform statistics across an entire resource. Each peptide contains a summary of the statistics of the peptidoform across the entire resource.
       tags:
         - molecules
       produces:
@@ -313,13 +313,13 @@ paths:
           default: 100
         - name: pageNumber
           in: query
-          description: Current page to be shown paged peptides (default page 1)
+          description: Current page of peptide results to be shown (default 1)
           required: false
           type: integer
           default: 0
         - name: resultType
           in: query
-          description: Type of the object to be retrieve Compact or Full dataset
+          description: Type of the object to be retrieved Compact or Full dataset
           required: true
           type: string
           enum: [compact, full]
@@ -327,7 +327,7 @@ paths:
         - name: passThreshold
           in: query
           type: boolean 
-          description: the PSM pass the thorsholds of the repository (e.g. FDR thresholds)
+          description: the PSM must pass the thresholds of the repository (e.g. FDR thresholds)
         - name: peptideSequence
           in: query
           type: string 
@@ -366,7 +366,7 @@ paths:
     get:
       summary: Get a collection of proteins
       operationId: getProteins
-      description: The protein entreypoint returns a protein statistics across an entire resource.
+      description: The protein entrey point returns protein statistics across an entire resource.
       tags:
       - molecules
       produces:
@@ -402,7 +402,7 @@ paths:
       - name: modification
         in: query
         type: string
-        description: modification that found in the peptide. For example, to query all peptides that are oxidated.
+        description: Modifications found in the peptide. For example, to query all peptides that are oxidated.
       responses:
         "200":
           description: Protein entity containing the summary of a protein across the entire resource.
