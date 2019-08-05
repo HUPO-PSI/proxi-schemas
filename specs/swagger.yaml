@@ -96,14 +96,17 @@ paths:
               $ref: "#/definitions/Dataset"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /datasets/{accession}:
     get:
       summary: Get an specific dataset
@@ -125,14 +128,17 @@ paths:
             $ref: "#/definitions/Dataset"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /spectra:
     get:
       summary: Get a collection of spectra
@@ -189,10 +195,12 @@ paths:
             $ref: "#/definitions/Spectrum"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -257,7 +265,7 @@ paths:
         - name: proteinAccession 
           in: query 
           type: string
-          description: Protein Acession for the identified peptide
+          description: Protein Accession for the identified peptide
         - name: charge
           in: query
           type: integer
@@ -277,10 +285,12 @@ paths:
             $ref: "#/definitions/Psm"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -289,7 +299,7 @@ paths:
      get:
       summary: Get a collection of peptides   
       operationId: getPeptides
-      description: The peptide entrey point returns a global Peptidoform statistics across an entire resource. Each peptide contains a summary of the statistics of the peptidoform across the entire resource.  
+      description: The peptide entry point returns global peptidoform statistics across an entire resource. Each peptide contains a summary of the statistics of the peptidoform across the entire resource.
       tags:
         - molecules
       produces:
@@ -303,13 +313,13 @@ paths:
           default: 100
         - name: pageNumber
           in: query
-          description: Current page to be shown paged peptides (default page 1)
+          description: Current page of peptide results to be shown (default 1)
           required: false
           type: integer
           default: 0
         - name: resultType
           in: query
-          description: Type of the object to be retrieve Compact or Full dataset
+          description: Type of the object to be retrieved Compact or Full dataset
           required: true
           type: string
           enum: [compact, full]
@@ -317,7 +327,7 @@ paths:
         - name: passThreshold
           in: query
           type: boolean 
-          description: the PSM pass the thorsholds of the repository (e.g. FDR thresholds)
+          description: the PSM must pass the thresholds of the repository (e.g. FDR thresholds)
         - name: peptideSequence
           in: query
           type: string 
@@ -341,14 +351,76 @@ paths:
             $ref: "#/definitions/Peptide"
         '400':
           description: Bad request. The requested parameters are not supported.
-        '401':
-          description: Authorization information is missing or invalid.
+          schema:
+            $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
+  /proteins:
+    get:
+      summary: Get a collection of proteins
+      operationId: getProteins
+      description: The protein entrey point returns protein statistics across an entire resource.
+      tags:
+      - molecules
+      produces:
+      - "application/json"
+      parameters:
+      - name: pageSize
+        in: query
+        description: How many items to return at one time (default 100, max 100)
+        required: false
+        type: integer
+        default: 100
+      - name: pageNumber
+        in: query
+        description: Current page to be shown paged peptides (default page 1)
+        required: false
+        type: integer
+        default: 0
+      - name: resultType
+        in: query
+        description: Type of the object to be retrieve Compact or Full dataset
+        required: true
+        type: string
+        enum: [compact, full]
+        default: compact
+      - name: passThreshold
+        in: query
+        type: boolean
+        description: the PSM pass the thorsholds of the repository (e.g. FDR thresholds)
+      - name: proteinAccession
+        in: query
+        type: string
+        description: Protein Acession for the identified peptide
+      - name: modification
+        in: query
+        type: string
+        description: Modifications found in the peptide. For example, to query all peptides that are oxidated.
+      responses:
+        "200":
+          description: Protein entity containing the summary of a protein across the entire resource.
+          schema:
+            $ref: "#/definitions/Protein"
+        '400':
+          description: Bad request. The requested parameters are not supported.
+          schema:
+            $ref: "#/definitions/Error"
+        '404':
+          description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
 definitions:
   
   OntologyTerm:
@@ -521,7 +593,8 @@ definitions:
         items: 
          $ref: "#/definitions/ProteinIdentification"
         
-  Peptide: 
+
+  Peptide:
     required:
       - peptidoForm 
     properties:
@@ -541,7 +614,34 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Modification"
-      
+
+  Protein:
+    required:
+    - proteinAccession
+    properties:
+      proteinAccession:
+        type: string
+        description: Protein Accession (e.g Q6ZS62)
+      countPSM:
+        type: integer
+        description: Number of PSMs that support the current Peptidoform
+      countDatasets:
+        type: string
+        description: Number of datasets that support the current PeptidoForm
+      ptms:
+        type: array
+        items:
+          $ref: "#/definitions/Modification"
+      countPeptides:
+        type: integer
+        description: Number of peptides identified for the protein
+      countUniquePeptides:
+        type: integer
+        description: Number of unique peptides identified for the protein
+      countPeptidoForms:
+        type: integer
+        description: Number of peptidoforms identified for the protein
+
   Error:
     required:
       - code
@@ -552,3 +652,6 @@ definitions:
         format: int32
       message:
         type: string
+
+
+

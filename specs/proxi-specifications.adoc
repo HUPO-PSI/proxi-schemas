@@ -24,13 +24,13 @@ endif::[]
 == Preface
 _Status of This Document_
 
-This document presents the final specification of the ProXI (The Proteomics expression Interface)
+This document presents the specification of the ProXI (The **Prot**eomics e**X**pression **I**nterface)
 an API specification developed by members of the Human Proteome Organisation (HUPO)
 Proteomics Standards Initiative (PSI) and ProteomeXchange partners. Distribution is unlimited.
 
 _Version of This Document_
 
-The current version of this document is: version 1.0.0-draft, Apr 2018.
+The current version of this document is: version 1.0.0-draft, July 2019.
 
 The latest draft version of this document may be found at
 https://github.com/HUPI-PSI/proxi-schemas.
@@ -56,9 +56,9 @@ defines a API specification to report proteomics results.
 [[background]]
 === Background
 
-Protein expression information (identification and quantification) is fundamental for understanding the function of the living organisms. Consequently, more and more research groups are working in this domain. An increasing amount of the mass spectrometry (MS)-based proteomics data generated is made available in public proteomics repositories such as PRIDE (www.ebi.ac.uk/pride/) and PeptideAtlas (wwww.peptideatlas.org). In addition, protein expression information can be accessed in other resources like the antibody-based Human Protein Atlas  and protein knowledge bases such as UniProt or neXtProt. At present, scientists need to access all the different proteomics resources when they want to get all information about a given protein. The alternative is to access knowledge bases such as UniProt or neXtProt, but the amount of data coming from MS proteomics repositories in these resources is still limited.
+Protein expression information (identification and quantification) is fundamental for understanding the function of living organisms. Consequently, more and more research groups are working in this domain. An increasing amount of the mass spectrometry (MS)-based proteomics data generated is made available in public proteomics repositories such as PRIDE (www.ebi.ac.uk/pride/) and PeptideAtlas (wwww.peptideatlas.org). In addition, protein expression information can be accessed in other resources like the antibody-based Human Protein Atlas and protein knowledge bases such as UniProt or neXtProt. At present, scientists need to access all the different proteomics resources when they want to get all information about a given protein. The alternative is to access knowledge bases such as UniProt or neXtProt, but the amount of data coming from MS proteomics repositories in these resources is still limited.
 
-The main goal behind the development of ProXI (Proteomics eXpression Interface) is to support researchers by making possible a distributed search of protein expression data through heterogeneous resources like the ones outlined above, among others.
+The main goal behind the development of ProXI (**Pro**teomics e**X**pression **I**nterface) is to support researchers by making possible a distributed search of protein expression data through heterogeneous resources like the ones outlined above, among others.
 
 The primary aim of project is to enable a biology-centric distributed search for protein expression data in bioinformatics resources taking into account metadata such as location (e.g. tissue, cell type) and level of expression, detection in disease states, etc. ProXI will provide a common entry point for showing information coming from different data resources.
 
@@ -97,65 +97,51 @@ Conclusions are presented in <<conclusions>>.
 == Use Cases for ProXI
 
 The following cases of usage have driven the development of the ProXI data model,
-and are used to define the scope of the format in version 1.0.
+and are used to define the scope of the format in version 1.0.0-draft.
 
-1. ProXI API should be simple enough to make proteomics results accessible to people outside the respective fields. This should facilitate the sharing of
-data beyond the borders of the fields and make it accessible to non-experts.
+1. ProXI API should be simple enough to make proteomics results accessible to people outside the respective fields. This should facilitate the sharing of data beyond the borders of the fields and make it accessible to non-experts.
 
-2. ProXI should contain sufficient information to provide biological insights of all findings in a proteomics study.
+2. ProXI should be able to provide mass spectrometry evidence deposited in public repositories for peptides and proteins. If a researcher (e.g. Biologist) is interested to know if a `peptide` or a `protein` has been observed before in a previous deposited dataset it should be possible to retrieve mass spectrometry evidence (MS/MS spectrum) that supports that evidence. It should be possible to retrieve additional information such as search engine scores and statistical assessments values.
 
 3. ProXI should enable reporting at different levels of detail: ranging from a simple dataset summary, experimental design to final quantitative information.
 
-4. It should develop and provide a Query Language (PXQL) to query mass spectrometry data server by different repositories.
+4. ProXI API should be able to retrieve information about independent experiments as well as aggregation analyses of multiple experiments. For example, ProXI API can be implemented by PeptideAtlas to report `peptide` and `protein` for groups or collections of datasets, but also can be implemented by PRIDE database to provide `peptide` and `protein` evidence at dataset (study) level.
 
-4. It should be possible to query any ProXI implementation and retrieve which type of information is provided by the
-resource and which methods are implemented. The API should be self discoverable.
+5. It should develop and provide a Query Language (PXQL) to query mass spectrometry data by different repositories.
 
-5. ProXI API should be possible to retrieve information about independent experiment as long as aggregation analysis of multiple experiments.
+6. It should be possible to query any ProXI implementation and retrieve which type of information is provided by the resource and which methods are implemented. The API should be self discoverable.
+
 
 [[notational-conventions]]
 == Notational Conventions
 
-The key words “MUST,” “MUST NOT,” “REQUIRED,” “SHALL,” “SHALL NOT,” “SHOULD,” “SHOULD NOT,” “RECOMMENDED,”
-“MAY,” and “OPTIONAL” are to be interpreted as described in RFC-2119 <<bradner-1997, (Bradner 1997)>>.
+The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” are to be interpreted as described in RFC-2119 <<bradner-1997, (Bradner 1997)>>.
 
 [[api-standard-openapi]]
+
 == API standard (OpenAPI)
 
-The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the
-capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and
-interact with the remote service with a minimal amount of implementation logic.
+The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.
 
-The OpenAPI specification can be read here https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md
+The OpenAPI specification can be read https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md[here]
 
 
 [[naming-notation-conventions]]
+
 == API conventions
 
 === Naming conventions
 
-1. A **resource** SHOULD be represented as a collection. For example, “datasets” is a collection of datasets where we can identify a single “dataset” using the
-resource URI “/datasets/{accession}”.
+1. A **resource** SHOULD be represented as a collection. For example, “datasets” is a collection of datasets where we can identify a single “dataset” using the resource URI “/datasets/{accession}”.
 
 2. MUST NOT use trailing forward slash (/) in URIs:
 
 ```
-  http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/
-  http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets 	  // This is much better version
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/
+http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets 	  # This is much better version
 ```
 
-3. MUST NOT use underscores ( _ ), instead use ( - ):
-
-It’s possible to use an underscore in place of hyphen to be used as separator – But depending on the application’s font,
-it’s possible that the underscore (_) character can either get partially obscured or completely hidden in some browsers
-or screens.
-
-```
-http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001/proteins/QPR001/peptides-scores   //More readable
-http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001/proteins/QPR001/peptides_scores  //More error prone
-```
-
-4. SHOULD NOT Use uppercase letters in URIs:
+3. SHOULD NOT Use uppercase letters in URIs:
 
 When convenient, lowercase letters should be consistently preferred in URI paths.
 **RFC 3986** defines URIs as case-sensitive except for the scheme and host components. e.g.
@@ -165,17 +151,17 @@ http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001        // Better 
 http://www.ebi.ac.uk/pride/archive/proxi/v1/Datasets/PXD000001
 ```
 
-5. MUST NOT use file extensions
+4. MUST NOT use file extensions
 
 File extensions look bad and do not add any advantage. Removing them decrease the
-length of URIs as well. No reason to keep them.
+length of URIs as well. No reason to keep them, then the API is retrieving multiple file formats (e.g. JSON and XML). This can be specified by a parameter or in the request header.
 
 ```
 http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001.json
 http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/PXD000001	      // This is correct URI
 ```
 
-6. MUST NOT use CRUD function names in URIs
+5. MUST NOT use CRUD function names in URIs
 
 URIs MUST NOT be used to indicate that a CRUD function is performed.
 URIs should be used to uniquely identify resources and not any action upon them.
@@ -186,33 +172,31 @@ http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets                         //G
 http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets/{accession}             //Get datasets for given Accession
 ```
 
+[[compact-fullobejcts]]
+=== Compact vs Full Objects
+
+Every API collection point SHOULD provide a parameter called `resultType`. This parameter will define the type of the object the API call will retrieve [Full or Compact].
+
+- A Compact object is a version of the object that only contains the required fields of the Object type. For example, for a peptide spectrum match this would be the `peptideSequence` or for an spectrum the `unified spectrum identifier`.
+
+- A Full object is a version of the object that contains all the attributes/fields of the Object type.
+
+6. The use of the **Compact** version of an object is RECOMMENDED as default behavior for collection end-points, for example:
+
 [[filtering-collections]]
 === Filtering collections
 
-7. We RECOMMENDED to use query component to filter URI collection
+7. We RECOMMEND to use query component to filter URI collection
 
-Many times, you will come across requirements where you will need a collection of resources sorted,
-filtered or limited based on some certain resource attribute.
-
-For this, do not create new APIs – rather enable sorting, filtering and pagination capabilities in resource
-collection API and pass the input parameters as query parameters:
+Many times, you will come across requirements where you will need a collection of resources `filtered` or limited based on some certain resource attribute. For this, do not create new APIs – rather enable filtering in resource collection API and pass the input parameters as query parameters:
 
 ```
 http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets?species=Human
 ```
 
-[[compact-full-objects]]
-==== Compact vs Full Object versions
+The filtering will be defined as <propertyName>=<propertyValue> where the propertyName is the name of the attribute that would be used for filtering and the propertyValue is the value by which the user would like to filter the collection.
 
-8. We RECOMMENDED the use of **Compact** version of an object as default behavior for collections end-points.
-
-Each object in the API MUST provide two flavours (Compact or Full). The **Compact** version of an object will be used when retrieve collections of the Object, for example:
-
-```
-http://www.ebi.ac.uk/pride/archive/proxi/v1/datasets
-```
-
-The Compact version will contains all the mandatory attributes for an Object. When designing each Data Object, mandatory fields should be the Minimum Information requeried to identified the object.
+If multiple values are used to filter the collection, the combination MUST be specified like `value1,value2`
 
 [[format-specification]]
 == Format specification
@@ -432,7 +416,6 @@ This is the list of elements in the schema:
 ]
 
 ```
-
 
 ==== Dataset API entry point
 
