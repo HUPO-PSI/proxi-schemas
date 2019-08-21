@@ -107,7 +107,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
-  /datasets/{accession}:
+  /datasets/{identifier}:
     get:
       summary: Get an specific dataset
       operationId: getDataset
@@ -116,9 +116,9 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: accession
+        - name: identifier
           in: path
-          description: Accession of the dataset
+          description: Identifier of the dataset
           required: true
           type: string
       responses:
@@ -454,14 +454,14 @@ definitions:
   
   Dataset:
     required:
-      - accession
+      - identifiers
       - title
       - species
       - instruments
       - contacts
       - publications
     properties:
-      accession:
+      identifiers:
         type: array
         items:
           $ref: "#/definitions/OntologyTerm"
