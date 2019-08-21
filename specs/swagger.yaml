@@ -485,7 +485,7 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/OntologyTerm"
-      datasetLink:
+      datasetLinks:
         type: "array"
         items:
           $ref: "#/definitions/OntologyTerm"
