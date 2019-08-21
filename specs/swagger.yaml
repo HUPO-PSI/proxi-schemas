@@ -459,7 +459,7 @@ definitions:
           $ref: "#/definitions/OntologyTerm"
       title:
         type: string
-      summary:
+      description:
         type: string
       species:
         type: array
