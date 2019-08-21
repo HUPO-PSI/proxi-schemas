@@ -192,7 +192,9 @@ paths:
         "200":
           description: Spectrum and metadata of the requested Universal Spectrum Identifier
           schema:
-            $ref: "#/definitions/Spectrum"
+            type: "array"
+            items:
+              $ref: "#/definitions/Spectrum"
         '400':
           description: Bad request. The requested parameters are not supported.
           schema:
@@ -280,9 +282,11 @@ paths:
           description: Peptidform specific including PTM localizations, it will only retrieve the specific PSMs.
       responses:
         "200":
-          description: Peptide Spectrum match 
+          description: Peptide Spectrum match
           schema:
-            $ref: "#/definitions/Psm"
+            type: "array"
+            items:
+              $ref: "#/definitions/Psm"
         '400':
           description: Bad request. The requested parameters are not supported.
           schema:
@@ -348,7 +352,9 @@ paths:
         "200":
           description: Peptide
           schema:
-            $ref: "#/definitions/Peptide"
+            type: "array"
+            items:
+              $ref: "#/definitions/Peptide"
         '400':
           description: Bad request. The requested parameters are not supported.
           schema:
@@ -407,7 +413,9 @@ paths:
         "200":
           description: Protein entity containing the summary of a protein across the entire resource.
           schema:
-            $ref: "#/definitions/Protein"
+            type: "array"
+            items:
+              $ref: "#/definitions/Protein"
         '400':
           description: Bad request. The requested parameters are not supported.
           schema:
