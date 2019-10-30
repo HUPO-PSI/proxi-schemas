@@ -6,6 +6,8 @@ proteomics to facilitate data comparision, exchange and verification.
 The **Pro**teomics e**X**pression **I**nterface is a suite of integrated APIs each targeting a different aspect
 of exchanging proteomics information between ProteomeXchange data partners and consumers.
 
+Here, all the api running can be hit: http://proteomecentral.proteomexchange.org/PROXI.php
+
 ## Structure of the Repository
 
 - meetings: Contains all the meeting discussions around the API.
