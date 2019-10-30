@@ -442,7 +442,9 @@ definitions:
         type: string
       value:
         type: string
-  
+      cv_param_group:
+        type: string
+
   OntologyTermList:
     required:
       - terms
