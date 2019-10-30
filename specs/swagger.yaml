@@ -444,6 +444,8 @@ definitions:
         type: string
       cv_param_group:
         type: string
+      value_accession:
+        type: string
 
   OntologyTermList:
     required:
