@@ -1,1 +1,2 @@
-Spectra Property	CvTerm	Optional/Required
+Spectra Property	CvTerm	Optional/Required	Description
+number of peaks	MS:1008040*	Required	Number of peaks or features in a spectrum.
