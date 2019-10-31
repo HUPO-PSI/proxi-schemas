@@ -1,4 +1,4 @@
-Spectra Property	CvTerm	Identified Optional/Required	Unidentified (Optional)Description
+Spectra Property	CvTerm	Identified Optional/Required	Unidentified (Optional)	Description
 number of peaks	MS:1008040*	Required	Required	Number of peaks or features in a spectrum.
 ms level	MS:1000511	Required	Optional	Stage number achieved in a multi stage mass spectrometry acquisition
 charge state	MS:1000041	Required	Required	Number of net charges, positive or negative, on an ion
