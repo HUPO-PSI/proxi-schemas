@@ -9,8 +9,6 @@ base peak intensity	MS:1000505	Optional	Optional	The intensity of the greatest p
 base peak m/z	MS:1000504	Optional	Optional	M/z value of the signal of highest intensity in the mass spectrum
 highest observed m/z	MS:1000527	Optional	Optional	Highest m/z value observed in the m/z array
 highest observed wavelength	MS:1000618	Optional	Optional	Highest wavelength observed in an EMR spectrum
-MS:1000528	lowest observed m/z						Lowest m/z value observed in the m/z array
-MS:1000619	lowest observed wavelength						Lowest wavelength observed in an EMR spectrum
-MS:1000798	peak list raw scans						A list of raw scans and or scan ranges used to generate a peak list. If possible the list of scans should be converted to native spectrum identifiers instead of using this term
-MS:1000797	peak list scans						A list of scan numbers and or scan ranges associated with a peak list. If possible the list of scans should be converted to native spectrum identifiers instead of using this term
-MS:1000285	total ion current						The sum of all the separate ion currents carried by the ions of different m/z contributing to a complete mass spectrum or in a specified m/z range of a mass spectrum
+lowest observed m/z	MS:1000528	Optional	Optional	Lowest m/z value observed in the m/z array
+lowest observed wavelength	MS:1000619	Optional	Optional	Lowest wavelength observed in an EMR spectrum
+total ion current	MS:1000285	Optional	Optional	The sum of all the separate ion currents carried by the ions of different m/z contributing to a complete mass spectrum or in a specified m/z range of a mass spectrum
