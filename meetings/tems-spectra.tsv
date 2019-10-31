@@ -1,8 +1,7 @@
-Spectra Property	CvTerm	Optional/Required	Description
-number of peaks	MS:1008040*	Required	Number of peaks or features in a spectrum.
-ms level	MS:1000511	Required	Stage number achieved in a multi stage mass spectrometry acquisition
-charge state	MS:1000041	Required	Number of net charges, positive or negative, on an ion
-retention time	MS:1000894	Optional	A time interval from the start of chromatography when an analyte exits a chromatographic column
-peptide sequence	?	Optional	Identified peptide sequence without PTMs
-peptidoform sequence	MS:1000889*	Optional	Sequence of letter symbols denoting the order of amino acid residues that compose the peptidoform including the encoding of any residue modifications that are present
-
+Spectra Property	CvTerm	Identified Optional/Required	Unidentified (Optional)Description
+number of peaks	MS:1008040*	Required	Required	Number of peaks or features in a spectrum.
+ms level	MS:1000511	Required	Optional	Stage number achieved in a multi stage mass spectrometry acquisition
+charge state	MS:1000041	Required	Required	Number of net charges, positive or negative, on an ion
+retention time	MS:1000894	Optional	Optional	A time interval from the start of chromatography when an analyte exits a chromatographic column
+peptide sequence	?	Required	Optional	Identified peptide sequence without PTMs
+peptidoform sequence	MS:1000889*	Required	Optional	Sequence of letter symbols denoting the order of amino acid residues that compose the peptidoform including the encoding of any residue modifications that are present
