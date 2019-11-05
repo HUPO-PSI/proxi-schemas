@@ -1,0 +1,14 @@
+Spectra Property	CvTerm	Identified (Optional/Required)	Unidentified (Required/Optional)	Description
+number of peaks	MS:1008040*	Required	Required	Number of peaks or features in a spectrum.
+ms level	MS:1000511	Required	Optional	Stage number achieved in a multi stage mass spectrometry acquisition
+charge state	MS:1000041	Required	Required	Number of net charges, positive or negative, on an ion
+retention time	MS:1000894	Optional	Optional	A time interval from the start of chromatography when an analyte exits a chromatographic column
+peptide sequence	?	Required	Optional	Identified peptide sequence without PTMs
+peptidoform sequence	MS:1000889*	Required	Optional	Sequence of letter symbols denoting the order of amino acid residues that compose the peptidoform including the encoding of any residue modifications that are present
+base peak intensity	MS:1000505	Optional	Optional	The intensity of the greatest peak in the mass spectrum
+base peak m/z	MS:1000504	Optional	Optional	M/z value of the signal of highest intensity in the mass spectrum
+highest observed m/z	MS:1000527	Optional	Optional	Highest m/z value observed in the m/z array
+highest observed wavelength	MS:1000618	Optional	Optional	Highest wavelength observed in an EMR spectrum
+lowest observed m/z	MS:1000528	Optional	Optional	Lowest m/z value observed in the m/z array
+lowest observed wavelength	MS:1000619	Optional	Optional	Lowest wavelength observed in an EMR spectrum
+total ion current	MS:1000285	Optional	Optional	The sum of all the separate ion currents carried by the ions of different m/z contributing to a complete mass spectrum or in a specified m/z range of a mass spectrum
