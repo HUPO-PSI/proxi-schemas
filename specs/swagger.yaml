@@ -299,11 +299,11 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /peptides:
+  /peptidoforms:
      get:
-      summary: Get a collection of peptides   
+      summary: Get a collection of peptidoforms
       operationId: getPeptides
-      description: The peptide entry point returns global peptidoform statistics across an entire resource. Each peptide contains a summary of the statistics of the peptidoform across the entire resource.
+      description: The peptidoforms entry point returns global peptidoform statistics across an entire resource. Each peptidoform contains a summary of the statistics of the peptidoform across the entire resource.
       tags:
         - molecules
       produces:
@@ -350,11 +350,11 @@ paths:
           description: Peptidoform specific including PTM localizations, it will only retrieve the specific PSMs.
       responses:
         "200":
-          description: Peptide
+          description: Peptidoform
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Peptide"
+              $ref: "#/definitions/Peptidoform"
         '400':
           description: Bad request. The requested parameters are not supported.
           schema:
@@ -606,7 +606,7 @@ definitions:
          $ref: "#/definitions/ProteinIdentification"
         
 
-  Peptide:
+  Peptidoform:
     required:
       - peptidoForm 
     properties:
