@@ -276,7 +276,7 @@ paths:
           in: query
           type: string 
           description: modification found in the peptide. For example, to query all peptides that are oxidated. 
-        - name: peptidoForm   
+        - name: peptidoform
           in: query 
           type: string
           description: Peptidform specific including PTM localizations, it will only retrieve the specific PSMs.
@@ -344,7 +344,7 @@ paths:
           in: query
           type: string 
           description: modification that found in the peptide. For example, to query all peptides that are oxidated. 
-        - name: peptidoForm   
+        - name: peptidoform
           in: query 
           type: string
           description: Peptidoform specific including PTM localizations, it will only retrieve the specific PSMs.
@@ -608,9 +608,9 @@ definitions:
 
   Peptidoform:
     required:
-      - peptidoForm 
+      - peptidoform
     properties:
-      peptidoForm: 
+      peptidoform:
         type: string 
         description: Peptidoform as String 
       peptideSequence: 
@@ -621,11 +621,15 @@ definitions:
         description: Number of PSMs that support the current Peptidoform 
       countDatasets: 
         type: string 
-        description: Number of datasets that support the current PeptidoForm 
+        description: Number of datasets that support the current Peptidoform
       ptms:
         type: array
         items:
           $ref: "#/definitions/Modification"
+      proteinAccessions:
+        type: array
+        items:
+          $ref: "#/definitions/ProteinIdentification"
 
   Protein:
     required:
@@ -639,7 +643,7 @@ definitions:
         description: Number of PSMs that support the current Peptidoform
       countDatasets:
         type: string
-        description: Number of datasets that support the current PeptidoForm
+        description: Number of datasets that support the current Peptidoform
       ptms:
         type: array
         items:
@@ -650,7 +654,7 @@ definitions:
       countUniquePeptides:
         type: integer
         description: Number of unique peptides identified for the protein
-      countPeptidoForms:
+      countPeptidoforms:
         type: integer
         description: Number of peptidoforms identified for the protein
 
