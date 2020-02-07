@@ -102,6 +102,10 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. The following end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -132,6 +136,10 @@ paths:
             $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. The following end point is not implemented by this resource
           schema:
             $ref: "#/definitions/Error"
         default:
@@ -201,6 +209,10 @@ paths:
             $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. The following end point is not implemented by this resource
           schema:
             $ref: "#/definitions/Error"
         default:
@@ -295,10 +307,15 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. The following end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /peptidoforms:
      get:
       summary: Get a collection of peptidoforms
@@ -363,6 +380,10 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. The following end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -422,6 +443,10 @@ paths:
             $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. The following end point is not implemented by this resource
           schema:
             $ref: "#/definitions/Error"
         default:
