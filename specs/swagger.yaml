@@ -44,7 +44,7 @@ paths:
           description: Current page to be shown paged datasets (default page 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieve Compact or Full dataset
@@ -168,7 +168,7 @@ paths:
           description: Current page to be shown paged datasets (default page 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieved Compact or Full dataset
@@ -240,7 +240,7 @@ paths:
           description: Current page to be shown paged psms (default page 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieved Compact or Full dataset
@@ -337,7 +337,7 @@ paths:
           description: Current page of peptide results to be shown (default 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieved Compact or Full dataset
@@ -410,7 +410,7 @@ paths:
         description: Current page to be shown paged peptides (default page 1)
         required: false
         type: integer
-        default: 0
+        default: 1
       - name: resultType
         in: query
         description: Type of the object to be retrieve Compact or Full dataset
