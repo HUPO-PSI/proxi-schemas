@@ -600,9 +600,9 @@ definitions:
     required:
       - peptideSequence
     properties: 
-      accession:
+      datasetIdentifier:
          type: string 
-         description: Accession of the PSM
+         description: Dataset identifier
       usi:
          type: string 
          description: The USI representation for the PSM
