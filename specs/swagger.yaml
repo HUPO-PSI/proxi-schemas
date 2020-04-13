@@ -44,7 +44,7 @@ paths:
           description: Current page to be shown paged datasets (default page 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieve Compact or Full dataset
@@ -102,6 +102,10 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. This end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -134,6 +138,10 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. This end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -160,7 +168,7 @@ paths:
           description: Current page to be shown paged datasets (default page 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieved Compact or Full dataset
@@ -179,15 +187,11 @@ paths:
         - name: msRun 
           in: query
           type: string 
-          description: MsRun containing the spectra 
-        - name: fileName 
-          in: query
-          type: string 
-          description: FileName containing the spectra
+          description: MsRun containing the spectra
         - name: scan
           in: query 
           type: string 
-          description: Scan to be searched
+          description: Scan or Index to be searched
       responses:
         "200":
           description: Spectrum and metadata of the requested Universal Spectrum Identifier
@@ -201,6 +205,10 @@ paths:
             $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. This end point is not implemented by this resource
           schema:
             $ref: "#/definitions/Error"
         default:
@@ -228,7 +236,7 @@ paths:
           description: Current page to be shown paged psms (default page 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieved Compact or Full dataset
@@ -248,10 +256,6 @@ paths:
           in: query
           type: string 
           description: MsRun containing the spetra 
-        - name: fileName 
-          in: query
-          type: string 
-          description: FileName containing the spectra
         - name: scan
           in: query 
           type: string 
@@ -295,10 +299,15 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. This end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+
   /peptidoforms:
      get:
       summary: Get a collection of peptidoforms
@@ -320,7 +329,7 @@ paths:
           description: Current page of peptide results to be shown (default 1)
           required: false
           type: integer
-          default: 0
+          default: 1
         - name: resultType
           in: query
           description: Type of the object to be retrieved Compact or Full dataset
@@ -363,6 +372,10 @@ paths:
           description: No data found for the specified parameters.
           schema:
             $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. This end point is not implemented by this resource
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Unexpected error
           schema:
@@ -389,7 +402,7 @@ paths:
         description: Current page to be shown paged peptides (default page 1)
         required: false
         type: integer
-        default: 0
+        default: 1
       - name: resultType
         in: query
         description: Type of the object to be retrieve Compact or Full dataset
@@ -422,6 +435,10 @@ paths:
             $ref: "#/definitions/Error"
         '404':
           description: No data found for the specified parameters.
+          schema:
+            $ref: "#/definitions/Error"
+        '501':
+          description: Not implemented. This end point is not implemented by this resource
           schema:
             $ref: "#/definitions/Error"
         default:
@@ -560,8 +577,6 @@ definitions:
   ProteinIdentification: 
     required: 
       - proteinAccession
-      - startPosition
-      - endPosition 
     properties:
       proteinAccession: 
         type: string 
@@ -577,9 +592,9 @@ definitions:
     required:
       - peptideSequence
     properties: 
-      accession:
+      datasetIdentifier:
          type: string 
-         description: Accession of the PSM
+         description: Dataset identifier
       usi:
          type: string 
          description: The USI representation for the PSM
