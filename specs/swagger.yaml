@@ -187,15 +187,11 @@ paths:
         - name: msRun 
           in: query
           type: string 
-          description: MsRun containing the spectra 
-        - name: fileName 
-          in: query
-          type: string 
-          description: FileName containing the spectra
+          description: MsRun containing the spectra
         - name: scan
           in: query 
           type: string 
-          description: Scan to be searched
+          description: Scan or Index to be searched
       responses:
         "200":
           description: Spectrum and metadata of the requested Universal Spectrum Identifier
@@ -260,10 +256,6 @@ paths:
           in: query
           type: string 
           description: MsRun containing the spetra 
-        - name: fileName 
-          in: query
-          type: string 
-          description: FileName containing the spectra
         - name: scan
           in: query 
           type: string 
