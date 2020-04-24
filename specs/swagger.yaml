@@ -605,8 +605,9 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Modification" 
-      searchEngineScore: 
+      confidenceScores:
         type: array
+        description: A list of confidence scores for the search engines, post processing pipelines or the database
         items: 
           $ref: "#/definitions/OntologyTerm"
       retentionTime: 
