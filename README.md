@@ -20,7 +20,7 @@ Here, all the api running can be hit: http://proteomecentral.proteomexchange.org
 
 ## PRIDE Repository
 
-- Get dataset: http://wwwdev.ebi.ac.uk/pride/proxi/archive/datasets/PXD005011
+- Get dataset: http://wwwdev.ebi.ac.uk/pride/proxi/archive/v0.1/datasets?resultType=full&accession=PXD000561
 
 - Search Datasets: http://wwwdev.ebi.ac.uk/pride/proxi/archive/datasets?pageSize=100&pageNumber=1&resultType=Full
 
@@ -51,10 +51,6 @@ Here, all the api running can be hit: http://proteomecentral.proteomexchange.org
   - https://repository.jpostdb.org/proxi/datasets?accession=PXD005159
   - https://repository.jpostdb.org/proxi/datasets?accession=JPST000200
   - https://repository.jpostdb.org/proxi/datasets?search=colorectal
-
-- Get Dataset
-  - https://repository.jpostdb.org/proxi/datasets/JPST000200
-  - https://repository.jpostdb.org/proxi/datasets/PXD005159
 
 ## Contributing
 
