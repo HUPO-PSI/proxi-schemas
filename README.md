@@ -21,19 +21,14 @@ Here, all the api running can be hit: http://proteomecentral.proteomexchange.org
 ## PRIDE Repository
 
 - Get dataset: http://wwwdev.ebi.ac.uk/pride/proxi/archive/v0.1/datasets?resultType=full&accession=PXD000561
-
 - Search Datasets: http://wwwdev.ebi.ac.uk/pride/proxi/archive/datasets?pageSize=100&pageNumber=1&resultType=Full
 
 ## Massive Repository
 
 - Get Dataset: http://ccms-internal.ucsd.edu/ProteoSAFe/proxi/datasets?resultType=full&accession=PXD000561
-
 - Datasets by contact: http://ccms-internal.ucsd.edu/ProteoSAFe/proxi/datasets?resultType=compact&contact=Pandey&pageSize=1
-
 - Datasets by publication: http://ccms-internal.ucsd.edu/ProteoSAFe/proxi/datasets?resultType=compact&publication=draft%20map&pageSize=1
-
 - Datasets by species: http://ccms-internal.ucsd.edu/ProteoSAFe/proxi/datasets?resultType=compact&species=mus
-
 - Search Datasets Mod (modification=iTRAQ): http://ccms-internal.ucsd.edu/ProteoSAFe/proxi/datasets?resultType=compact&modification=iTRAQ
 
 
