@@ -110,43 +110,6 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-
-  /datasets/{identifier}:
-    get:
-      summary: Get an specific dataset
-      operationId: getDataset
-      tags:
-        - datasets
-      produces:
-        - "application/json"
-      parameters:
-        - name: identifier
-          in: path
-          description: Identifier of the dataset
-          required: true
-          type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: "#/definitions/Dataset"
-        '400':
-          description: Bad request. The requested parameters are not supported.
-          schema:
-            $ref: "#/definitions/Error"
-        '404':
-          description: No data found for the specified parameters.
-          schema:
-            $ref: "#/definitions/Error"
-        '501':
-          description: Not implemented. This end point is not implemented by this resource
-          schema:
-            $ref: "#/definitions/Error"
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-
   /spectra:
     get:
       summary: Get a collection of spectra
